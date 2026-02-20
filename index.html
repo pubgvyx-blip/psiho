@@ -95,7 +95,7 @@
             gap: 8px;
         }
         
-        /* Кастомные SVG иконки для пунктов */
+        /* Кастомные SVG иконки */
         .li-icon {
             position: absolute;
             left: 0;
@@ -214,6 +214,79 @@
             51%, 100% { opacity: 0; }
         }
         
+        /* Стиль для терминального окна PhoneInfoga */
+        .terminal-window {
+            background-color: #0a0a0a;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            margin: 20px 0 15px 35px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            position: relative;
+        }
+        
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #00ff00;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #00ff00;
+            opacity: 0.5;
+        }
+        
+        .terminal-dot:nth-child(2) {
+            opacity: 0.8;
+        }
+        
+        .terminal-dot:nth-child(3) {
+            opacity: 1;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .terminal-prompt {
+            color: #00ff00;
+            margin-right: 10px;
+        }
+        
+        .terminal-output {
+            color: #00ff00;
+            opacity: 0.9;
+        }
+        
+        .terminal-highlight {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+            font-weight: bold;
+        }
+        
+        .terminal-cursor-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .terminal-cursor {
+            width: 10px;
+            height: 20px;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+        
         /* Адаптация */
         @media (max-width: 600px) {
             .container {
@@ -232,9 +305,15 @@
             .contact-item {
                 justify-content: center;
             }
+            
+            .terminal-window {
+                margin: 15px 0 15px 15px;
+                padding: 10px;
+                font-size: 0.8em;
+            }
         }
 
-        /* Специальный стиль для заголовка */
+        /* Иконка для заголовка */
         .title-icon {
             width: 35px;
             height: 35px;
@@ -357,6 +436,60 @@
                     Кастомные инструменты для различных целей — от <span class="price">20.99 USDT</span>
                 </li>
             </ul>
+            
+            <!-- Терминальное окно PhoneInfoga -->
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                    <div class="terminal-dot"></div>
+                    <span style="margin-left: auto; color: #00ff00; opacity: 0.7;">[fredge-cam]aro PhoneInfoga</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-output"> python3 phoneinfoga.py -m +3361 --any</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">PhoneInfoga Ver. v1.10.9</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Coded by Sundowday</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[1] --- Fetching informations for 3351--- [1]</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+2 Running local scan...</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 International format: <span class="terminal-highlight">+33 6 1---</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 Local format: <span class="terminal-highlight">61---</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 Country found: <span class="terminal-highlight">France (+33)</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 City/Area: <span class="terminal-highlight">France</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 Carrier: <span class="terminal-highlight">3FR</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">+1 Timezone: <span class="terminal-highlight">Europe/Paris</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[1] The number is valid and possible.</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[1] Scan finished.</span>
+                </div>
+                <div class="terminal-cursor-line">
+                    <span class="terminal-prompt">by psiho</span>
+                    <span class="terminal-cursor"></span>
+                </div>
+            </div>
         </div>
         
         <!-- АККАУНТЫ ТЕЛЕГРАМ -->
@@ -389,7 +522,7 @@
             </ul>
         </div>
         
-        <!-- Контакты с кастомными иконками -->
+        <!-- Контакты -->
         <div class="footer">
             <div>по вопросам и сотрудничеству:</div>
             <div class="contacts">
