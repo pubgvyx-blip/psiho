@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psihokid price</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff00;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #111111;
+            border: 2px solid #00ff00;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: relative;
+        }
+        
+        /* Анимированная линия сверху */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-align: center;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 15px;
+            text-shadow: 0 0 10px #00ff00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            text-transform: uppercase;
+            border-left: 4px solid #00ff00;
+            padding-left: 15px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Кастомные SVG иконки для пунктов */
+        .li-icon {
+            position: absolute;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            fill: #00ff00;
+            filter: drop-shadow(0 0 5px #00ff00);
+        }
+        
+        /* Стиль для подпунктов */
+        .sub-items {
+            margin: 10px 0 15px 35px;
+            padding: 15px 20px;
+            border-left: 2px solid #00ff00;
+            background-color: #1a1a1a;
+            font-size: 0.95em;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .sub-items li {
+            border-bottom: 1px dotted #00ff00;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            padding-left: 25px;
+        }
+        
+        .sub-items li:last-child {
+            border-bottom: none;
+        }
+        
+        .sub-items .li-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+        }
+        
+        /* Цена */
+        .price {
+            color: #00ff00;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ff00;
+            margin-left: auto;
+            background: #1a1a1a;
+            padding: 2px 8px;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+        }
+        
+        /* Контакты внизу */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #00ff00;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            color: #00ff00;
+            text-decoration: none;
+            border: 1px solid #00ff00;
+            padding: 12px 25px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 30px;
+            background: #1a1a1a;
+        }
+        
+        .contact-item:hover {
+            background-color: #00ff00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.05);
+        }
+        
+        .contact-item:hover .contact-icon {
+            fill: #0a0a0a;
+        }
+        
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            fill: #00ff00;
+            transition: all 0.3s;
+        }
+        
+        /* Мигающий курсор */
+        .cursor-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 15px;
+            height: 25px;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Адаптация */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .contacts {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+        }
+
+        /* Специальный стиль для заголовка */
+        .title-icon {
+            width: 35px;
+            height: 35px;
+            fill: #00ff00;
+            filter: drop-shadow(0 0 5px #00ff00);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <svg class="title-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            PSIHOKID PRICE
+            <svg class="title-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </h1>
+        
+        <!-- РАССЛЕДОВАНИЯ -->
+        <div class="section">
+            <h2>
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                РАССЛЕДОВАНИЯ
+            </h2>
+            <ul>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    Информационное досье: <span class="price">8.99 USDT</span>
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    Оперативное досье: <span class="price">19.99 USDT</span>
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    Разведывательное досье: <span class="price">39.99 USDT</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- ОБУЧЕНИЕ -->
+        <div class="section">
+            <h2>
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
+                </svg>
+                ОБУЧЕНИЕ
+            </h2>
+            <ul>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
+                    </svg>
+                    полный курс - <span class="price">59.99 USDT</span>
+                </li>
+            </ul>
+            <ul class="sub-items">
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                    </svg>
+                    Персональное наставничество "от А до Я"
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                    Индивидуальная программа с учетом личных интересов ученика.
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                    </svg>
+                    Помогает стать более анонимным.
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M21 6h-2v3h-2V6h-2V4h2V1h2v3h2v2zm-6-2v2h-2V4h2zm-6 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM9 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-5-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                    Освоение профессиональных инструментов + их предоставление.
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    Обучение аналитике и визуализации данных.
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/>
+                    </svg>
+                    Практические кейсы из реальной разведпрактики.
+                </li>
+            </ul>
+        </div>
+        
+        <!-- СОФТ ПОД ЗАКАЗ -->
+        <div class="section">
+            <h2>
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                </svg>
+                СОФТ ПОД ЗАКАЗ
+            </h2>
+            <ul>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                    Кастомные инструменты для различных целей — от <span class="price">20.99 USDT</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- АККАУНТЫ ТЕЛЕГРАМ -->
+        <div class="section">
+            <h2>
+                <svg class="contact-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+                АККАУНТЫ ТЕЛЕГРАМ
+            </h2>
+            <ul>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                    +7 (РФ) — <span class="price">3.99 USDT</span>
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                    +380 (Укр) — <span class="price">4.99 USDT</span>
+                </li>
+                <li>
+                    <svg class="li-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                    +1 (США/Канада) — <span class="price">7.99 USDT</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Контакты с кастомными иконками -->
+        <div class="footer">
+            <div>по вопросам и сотрудничеству:</div>
+            <div class="contacts">
+                <a href="https://t.me/vyxedith" class="contact-item" target="_blank">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.53.52-.5-.01-1.47-.28-2.19-.52-.88-.29-1.58-.44-1.52-.94.03-.26.39-.52 1.07-.8 4.16-1.81 6.94-3.01 8.33-3.59 3.97-1.67 4.8-1.96 5.34-1.97.12 0 .38.03.55.18.15.13.19.31.21.44.02.14.02.36-.01.56z"/>
+                    </svg>
+                    Канал
+                </a>
+                <a href="https://t.me/vyxeyes" class="contact-item" target="_blank">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                    </svg>
+                    Контакт
+                </a>
+            </div>
+            <div class="cursor-container">
+                <span>_</span>
+                <span class="cursor"></span>
+                <span>_</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
