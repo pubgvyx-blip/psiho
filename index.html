@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psihokid price</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Psihokid | Две страницы</title>
     <style>
         * {
             margin: 0;
@@ -16,25 +16,47 @@
             font-family: 'Courier New', Courier, monospace;
             color: #00ff00;
             line-height: 1.6;
-            padding: 20px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        /* Основной контейнер для свайпа */
+        .pages-container {
+            width: 100%;
+            max-width: 850px;
+            position: relative;
+            touch-action: pan-y pinch-zoom;
+        }
+        
+        /* Контейнер страниц */
+        .pages-wrapper {
+            display: flex;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+        
+        /* Индивидуальная страница */
+        .page {
+            flex: 0 0 100%;
+            padding: 10px;
+        }
+        
+        /* Карточка с контентом */
+        .card {
             background-color: #111111;
             border: 2px solid #00ff00;
             padding: 40px;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
             position: relative;
+            width: 100%;
         }
         
         /* Анимированная линия сверху */
-        .container::before {
+        .card::before {
             content: "";
             position: absolute;
             top: 0;
@@ -50,8 +72,67 @@
             100% { transform: translateX(100%); }
         }
         
+        /* Индикатор страниц */
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0 10px;
+        }
+        
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #00ff00;
+            background-color: transparent;
+            transform: rotate(45deg);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .indicator-dot.active {
+            background-color: #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            transform: rotate(0deg) scale(1.2);
+        }
+        
+        /* Подсказка для навигации */
+        .nav-hint {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 0.8em;
+            opacity: 0.7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-hint span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-hint svg {
+            width: 16px;
+            height: 16px;
+            fill: #00ff00;
+        }
+        
+        /* Маленький текст про 2 вкладки */
+        .bio-note {
+            text-align: center;
+            font-size: 0.7em;
+            opacity: 0.5;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            border-top: 1px dashed #00ff00;
+            padding-top: 10px;
+        }
+        
         h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -63,6 +144,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            word-break: break-word;
         }
         
         h2 {
@@ -93,9 +175,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
         
-        /* Кастомные SVG иконки */
         .li-icon {
             position: absolute;
             left: 0;
@@ -105,7 +187,6 @@
             filter: drop-shadow(0 0 5px #00ff00);
         }
         
-        /* Стиль для подпунктов */
         .sub-items {
             margin: 10px 0 15px 35px;
             padding: 15px 20px;
@@ -132,7 +213,6 @@
             opacity: 0.8;
         }
         
-        /* Цена */
         .price {
             color: #00ff00;
             font-weight: bold;
@@ -142,9 +222,9 @@
             padding: 2px 8px;
             border: 1px solid #00ff00;
             border-radius: 4px;
+            white-space: nowrap;
         }
         
-        /* Контакты внизу */
         .footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -158,6 +238,7 @@
             justify-content: center;
             gap: 30px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         .contact-item {
@@ -191,7 +272,6 @@
             transition: all 0.3s;
         }
         
-        /* Мигающий курсор */
         .cursor-container {
             margin-top: 20px;
             display: flex;
@@ -214,7 +294,6 @@
             51%, 100% { opacity: 0; }
         }
         
-        /* Стиль для терминального окна PhoneInfoga */
         .terminal-window {
             background-color: #0a0a0a;
             border: 2px solid #00ff00;
@@ -225,6 +304,7 @@
             font-size: 0.9em;
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
             position: relative;
+            overflow-x: auto;
         }
         
         .terminal-header {
@@ -279,7 +359,7 @@
             margin-top: 10px;
         }
         
-        .terminal-cursor {
+        .terminal-cursor-small {
             width: 10px;
             height: 20px;
             background-color: #00ff00;
@@ -287,14 +367,40 @@
             margin-left: 5px;
         }
         
+        .new-badge {
+            background-color: #00ff00;
+            color: #0a0a0a;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .title-icon {
+            width: 35px;
+            height: 35px;
+            fill: #00ff00;
+            filter: drop-shadow(0 0 5px #00ff00);
+            flex-shrink: 0;
+        }
+        
         /* Адаптация */
         @media (max-width: 600px) {
-            .container {
+            .card {
                 padding: 20px;
             }
             
             h1 {
                 font-size: 1.8em;
+                letter-spacing: 3px;
             }
             
             .contacts {
@@ -311,240 +417,583 @@
                 padding: 10px;
                 font-size: 0.8em;
             }
+            
+            .nav-hint {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .price {
+                margin-left: 0;
+                width: 100%;
+                text-align: right;
+            }
+            
+            li {
+                flex-wrap: wrap;
+            }
         }
 
-        /* Иконка для заголовка */
-        .title-icon {
-            width: 35px;
-            height: 35px;
-            fill: #00ff00;
-            filter: drop-shadow(0 0 5px #00ff00);
+        /* Страница 2 - новые услуги */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .service-card {
+            border: 1px solid #00ff00;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .service-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dotted #00ff00;
+            padding-bottom: 10px;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .service-features li {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            padding-left: 20px;
+        }
+        
+        .service-features li::before {
+            content: "›";
+            position: absolute;
+            left: 0;
+            color: #00ff00;
+        }
+        
+        .service-price {
+            font-size: 1.4em;
+            text-align: right;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #00ff00;
+        }
+        
+        /* Бейдж премиум */
+        .premium-badge {
+            border-color: #ffaa00;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.3);
+        }
+        
+        .premium-badge .service-title {
+            color: #ffaa00;
+        }
+        
+        .premium-badge .price {
+            border-color: #ffaa00;
+            color: #ffaa00;
+            text-shadow: 0 0 5px #ffaa00;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>
-            <svg class="title-icon" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-            </svg>
-            PSIHOKID PRICE
-            <svg class="title-icon" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-            </svg>
-        </h1>
-        
-        <!-- РАССЛЕДОВАНИЯ -->
-        <div class="section">
-            <h2>
-                <svg class="contact-icon" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                </svg>
-                РАССЛЕДОВАНИЯ
-            </h2>
-            <ul>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                    Информационное досье: <span class="price">8.99 USDT</span>
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                    Оперативное досье: <span class="price">19.99 USDT</span>
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                    Разведывательное досье: <span class="price">39.99 USDT</span>
-                </li>
-            </ul>
+    <div class="pages-container">
+        <!-- Индикатор страниц -->
+        <div class="page-indicator">
+            <div class="indicator-dot active" onclick="goToPage(0)"></div>
+            <div class="indicator-dot" onclick="goToPage(1)"></div>
         </div>
         
-        <!-- ОБУЧЕНИЕ -->
-        <div class="section">
-            <h2>
-                <svg class="contact-icon" viewBox="0 0 24 24">
-                    <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
+        <!-- Подсказка навигации -->
+        <div class="nav-hint">
+            <span>
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
                 </svg>
-                ОБУЧЕНИЕ
-            </h2>
-            <ul>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
-                    </svg>
-                    полный курс - <span class="price">59.99 USDT</span>
-                </li>
-            </ul>
-            <ul class="sub-items">
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
-                    </svg>
-                    Персональное наставничество "от А до Я"
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                    Индивидуальная программа с учетом личных интересов ученика.
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-                    </svg>
-                    Помогает стать более анонимным.
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M21 6h-2v3h-2V6h-2V4h2V1h2v3h2v2zm-6-2v2h-2V4h2zm-6 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM9 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-5-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                    </svg>
-                    Освоение профессиональных инструментов + их предоставление.
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                    </svg>
-                    Обучение аналитике и визуализации данных.
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/>
-                    </svg>
-                    Практические кейсы из реальной разведпрактики.
-                </li>
-            </ul>
+                ← → ПК (стрелки)
+            </span>
+            <span>
+                <svg viewBox="0 0 24 24">
+                    <path d="M7 6v12l10-6z"/>
+                </svg>
+                Свайп (телефон)
+            </span>
         </div>
         
-        <!-- СОФТ ПОД ЗАКАЗ -->
-        <div class="section">
-            <h2>
-                <svg class="contact-icon" viewBox="0 0 24 24">
-                    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-                </svg>
-                СОФТ ПОД ЗАКАЗ
-            </h2>
-            <ul>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-                    </svg>
-                    Кастомные инструменты для различных целей — от <span class="price">20.99 USDT</span>
-                </li>
-            </ul>
+        <!-- Контейнер для свайпа -->
+        <div class="pages-wrapper" id="pagesWrapper">
+            <!-- СТРАНИЦА 1: Основной прайс -->
+            <div class="page">
+                <div class="card">
+                    <h1>
+                        <svg class="title-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                        PSIHOKID #1
+                        <svg class="title-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </h1>
+                    
+                    <!-- РАССЛЕДОВАНИЯ -->
+                    <div class="section">
+                        <h2>
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            РАССЛЕДОВАНИЯ
+                        </h2>
+                        <ul>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                                Информационное досье: <span class="price">8.99 USDT</span>
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                                Оперативное досье: <span class="price">19.99 USDT</span>
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                                Разведывательное досье: <span class="price">39.99 USDT</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- ОБУЧЕНИЕ -->
+                    <div class="section">
+                        <h2>
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
+                            </svg>
+                            ОБУЧЕНИЕ
+                        </h2>
+                        <ul>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 3L1 9l11 6 11-6-11-6zm0 11.5L3.53 12 12 7.5 20.47 12 12 14.5zM12 20l-9-5.09v3.32L12 23l9-5.77v-3.32L12 20z"/>
+                                </svg>
+                                полный курс - <span class="price">59.99 USDT</span>
+                            </li>
+                        </ul>
+                        <ul class="sub-items">
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                                </svg>
+                                Персональное наставничество "от А до Я"
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                Индивидуальная программа
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                                </svg>
+                                Помогает стать более анонимным
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M21 6h-2v3h-2V6h-2V4h2V1h2v3h2v2zm-6-2v2h-2V4h2zm-6 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM9 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-5-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg>
+                                Профессиональные инструменты
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                                </svg>
+                                Аналитика и визуализация
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/>
+                                </svg>
+                                Реальные кейсы
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- СОФТ ПОД ЗАКАЗ -->
+                    <div class="section">
+                        <h2>
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                            </svg>
+                            СОФТ ПОД ЗАКАЗ
+                        </h2>
+                        <ul>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                                </svg>
+                                Кастомные инструменты — от <span class="price">20.99 USDT</span>
+                            </li>
+                        </ul>
+                        
+                        <!-- Терминал -->
+                        <div class="terminal-window">
+                            <div class="terminal-header">
+                                <div class="terminal-dot"></div>
+                                <div class="terminal-dot"></div>
+                                <div class="terminal-dot"></div>
+                                <span style="margin-left: auto; color: #00ff00; opacity: 0.7;">[fredge-cam]aro PhoneInfoga</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-output"> python3 phoneinfoga.py -m +3361 --any</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">PhoneInfoga Ver. v1.10.9</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">Coded by Sundowday</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">[1] --- Fetching informations for 3351--- [1]</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+2 Running local scan...</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 International format: <span class="terminal-highlight">+33 6 1---</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 Local format: <span class="terminal-highlight">61---</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 Country found: <span class="terminal-highlight">France (+33)</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 City/Area: <span class="terminal-highlight">France</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 Carrier: <span class="terminal-highlight">3FR</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">+1 Timezone: <span class="terminal-highlight">Europe/Paris</span></span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">[1] The number is valid and possible.</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">[1] Scan finished.</span>
+                            </div>
+                            <div class="terminal-cursor-line">
+                                <span class="terminal-prompt">by psiho</span>
+                                <span class="terminal-cursor-small"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- АККАУНТЫ ТЕЛЕГРАМ -->
+                    <div class="section">
+                        <h2>
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                            </svg>
+                            АККАУНТЫ ТЕЛЕГРАМ
+                        </h2>
+                        <ul>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                +7 (РФ) — <span class="price">3.99 USDT</span>
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                +380 (Укр) — <span class="price">4.99 USDT</span>
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                +1 (США/Канада) — <span class="price">7.99 USDT</span>
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                +420 (Чехия) — <span class="price">4.29 USDT</span> <span class="new-badge">NEW</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Контакты -->
+                    <div class="footer">
+                        <div>по вопросам и сотрудничеству:</div>
+                        <div class="contacts">
+                            <a href="https://t.me/vyxedith" class="contact-item" target="_blank">
+                                <svg class="contact-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.53.52-.5-.01-1.47-.28-2.19-.52-.88-.29-1.58-.44-1.52-.94.03-.26.39-.52 1.07-.8 4.16-1.81 6.94-3.01 8.33-3.59 3.97-1.67 4.8-1.96 5.34-1.97.12 0 .38.03.55.18.15.13.19.31.21.44.02.14.02.36-.01.56z"/>
+                                </svg>
+                                Канал
+                            </a>
+                            <a href="https://t.me/vyxeyes" class="contact-item" target="_blank">
+                                <svg class="contact-icon" viewBox="0 0 24 24">
+                                    <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                                </svg>
+                                Контакт
+                            </a>
+                        </div>
+                        <div class="cursor-container">
+                            <span>_</span>
+                            <span class="cursor"></span>
+                            <span>_</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <!-- Терминальное окно PhoneInfoga -->
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="terminal-dot"></div>
-                    <div class="terminal-dot"></div>
-                    <div class="terminal-dot"></div>
-                    <span style="margin-left: auto; color: #00ff00; opacity: 0.7;">[fredge-cam]aro PhoneInfoga</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">$</span>
-                    <span class="terminal-output"> python3 phoneinfoga.py -m +3361 --any</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">PhoneInfoga Ver. v1.10.9</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">Coded by Sundowday</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">[1] --- Fetching informations for 3351--- [1]</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+2 Running local scan...</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 International format: <span class="terminal-highlight">+33 6 1---</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 Local format: <span class="terminal-highlight">61---</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 Country found: <span class="terminal-highlight">France (+33)</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 City/Area: <span class="terminal-highlight">France</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 Carrier: <span class="terminal-highlight">3FR</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">+1 Timezone: <span class="terminal-highlight">Europe/Paris</span></span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">[1] The number is valid and possible.</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">[1] Scan finished.</span>
-                </div>
-                <div class="terminal-cursor-line">
-                    <span class="terminal-prompt">by psiho</span>
-                    <span class="terminal-cursor"></span>
+            <!-- СТРАНИЦА 2: Новые услуги (1,4,6) -->
+            <div class="page">
+                <div class="card">
+                    <h1>
+                        <svg class="title-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                        PSIHOKID #2
+                        <svg class="title-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </h1>
+                    
+                    <!-- PREMIUM УСЛУГИ -->
+                    <div class="services-grid">
+                        <!-- 1. EMAIL'ы (одноразовые/старые аккаунты) -->
+                        <div class="service-card">
+                            <div class="service-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#00ff00">
+                                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                                EMAIL Аккаунты
+                            </div>
+                            <ul class="service-features">
+                                <li>Одноразовые почты (tempmail)</li>
+                                <li>Старые аккаунты gmail/yahoo</li>
+                                <li>Доступ к почте с подтверждением</li>
+                                <li>Аккаунты для регистраций</li>
+                                <li>Смена пароля в подарок</li>
+                            </ul>
+                            <div class="service-price">
+                                <span class="price">от 2.99 USDT</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 4. Досье по фото -->
+                        <div class="service-card">
+                            <div class="service-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#00ff00">
+                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                                </svg>
+                                Досье по фото
+                            </div>
+                            <ul class="service-features">
+                                <li>Поиск по лицам (FindFace)</li>
+                                <li>Социальные сети по фото</li>
+                                <li>Дата/время съемки (метаданные)</li>
+                                <li>Геолокация по фото</li>
+                                <li>Полный отчет + ссылки</li>
+                            </ul>
+                            <div class="service-price">
+                                <span class="price">от 14.99 USDT</span> <span class="new-badge">ХИТ</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 6. Premium поддержка 24/7 -->
+                        <div class="service-card premium-badge">
+                            <div class="service-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffaa00">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                                PREMIUM 24/7
+                            </div>
+                            <ul class="service-features">
+                                <li>Личный куратор в Telegram</li>
+                                <li>Ответы на вопросы 24/7</li>
+                                <li>Помощь в расследованиях</li>
+                                <li>Эксклюзивные базы данных</li>
+                                <li>Приоритетное выполнение заказов</li>
+                                <li>Скидка 15% на все услуги</li>
+                            </ul>
+                            <div class="service-price">
+                                <span class="price" style="border-color: #ffaa00; color: #ffaa00;">49.99 USDT/мес</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Дополнительная информация -->
+                    <div class="section">
+                        <h2>
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            КАК ЗАКАЗАТЬ
+                        </h2>
+                        <ul>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                Напиши @vyxeyes с указанием услуги
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                Оплата: USDT (TRC20/BEP20)
+                            </li>
+                            <li>
+                                <svg class="li-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                                </svg>
+                                Время выполнения: от 5 минут
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Контакты (такие же как на 1 странице) -->
+                    <div class="footer">
+                        <div>по вопросам и сотрудничеству:</div>
+                        <div class="contacts">
+                            <a href="https://t.me/vyxedith" class="contact-item" target="_blank">
+                                <svg class="contact-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.53.52-.5-.01-1.47-.28-2.19-.52-.88-.29-1.58-.44-1.52-.94.03-.26.39-.52 1.07-.8 4.16-1.81 6.94-3.01 8.33-3.59 3.97-1.67 4.8-1.96 5.34-1.97.12 0 .38.03.55.18.15.13.19.31.21.44.02.14.02.36-.01.56z"/>
+                                </svg>
+                                Канал
+                            </a>
+                            <a href="https://t.me/vyxeyes" class="contact-item" target="_blank">
+                                <svg class="contact-icon" viewBox="0 0 24 24">
+                                    <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                                </svg>
+                                Контакт
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- АККАУНТЫ ТЕЛЕГРАМ -->
-        <div class="section">
-            <h2>
-                <svg class="contact-icon" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                </svg>
-                АККАУНТЫ ТЕЛЕГРАМ
-            </h2>
-            <ul>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                    +7 (РФ) — <span class="price">3.99 USDT</span>
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                    +380 (Укр) — <span class="price">4.99 USDT</span>
-                </li>
-                <li>
-                    <svg class="li-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                    +1 (США/Канада) — <span class="price">7.99 USDT</span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Контакты -->
-        <div class="footer">
-            <div>по вопросам и сотрудничеству:</div>
-            <div class="contacts">
-                <a href="https://t.me/vyxedith" class="contact-item" target="_blank">
-                    <svg class="contact-icon" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.53.52-.5-.01-1.47-.28-2.19-.52-.88-.29-1.58-.44-1.52-.94.03-.26.39-.52 1.07-.8 4.16-1.81 6.94-3.01 8.33-3.59 3.97-1.67 4.8-1.96 5.34-1.97.12 0 .38.03.55.18.15.13.19.31.21.44.02.14.02.36-.01.56z"/>
-                    </svg>
-                    Канал
-                </a>
-                <a href="https://t.me/vyxeyes" class="contact-item" target="_blank">
-                    <svg class="contact-icon" viewBox="0 0 24 24">
-                        <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
-                    </svg>
-                    Контакт
-                </a>
-            </div>
-            <div class="cursor-container">
-                <span>_</span>
-                <span class="cursor"></span>
-                <span>_</span>
-            </div>
+        <!-- Маленький текст про 2 вкладки -->
+        <div class="bio-note">
+            ⚡ в нашем био 2 вкладки • используй стрелки или свайп ⚡
         </div>
     </div>
+
+    <script>
+        const wrapper = document.getElementById('pagesWrapper');
+        const dots = document.querySelectorAll('.indicator-dot');
+        let currentPage = 0;
+        let startX = 0;
+        let isDragging = false;
+        let threshold = 50; // минимальное расстояние для свайпа
+
+        // Обновление индикатора
+        function updateIndicator(page) {
+            dots.forEach((dot, index) => {
+                if (index === page) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Переход на страницу
+        function goToPage(page) {
+            currentPage = page;
+            wrapper.style.transform = `translateX(-${currentPage * 100}%)`;
+            updateIndicator(currentPage);
+        }
+
+        // Обработчики для свайпа на телефоне
+        wrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            wrapper.style.transition = 'none';
+        });
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diff = currentX - startX;
+            const movePercent = (diff / wrapper.offsetWidth) * 100;
+            
+            // Ограничиваем перетаскивание
+            if ((currentPage === 0 && diff > 0) || (currentPage === 1 && diff < 0)) {
+                // Не даем уйти за пределы
+                return;
+            }
+            
+            wrapper.style.transform = `translateX(calc(-${currentPage * 100}% + ${diff}px))`;
+        });
+
+        wrapper.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const endX = e.changedTouches[0].clientX;
+            const diff = endX - startX;
+            
+            wrapper.style.transition = 'transform 0.3s ease-out';
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && currentPage > 0) {
+                    // Свайп вправо (на предыдущую)
+                    goToPage(currentPage - 1);
+                } else if (diff < 0 && currentPage < 1) {
+                    // Свайп влево (на следующую)
+                    goToPage(currentPage + 1);
+                } else {
+                    // Возврат на текущую
+                    goToPage(currentPage);
+                }
+            } else {
+                // Возврат на текущую
+                goToPage(currentPage);
+            }
+        });
+
+        // Обработчики для стрелок на клавиатуре
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentPage > 0) {
+                goToPage(currentPage - 1);
+            } else if (e.key === 'ArrowRight' && currentPage < 1) {
+                goToPage(currentPage + 1);
+            }
+        });
+
+        // Обработчики для клика по индикаторам
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToPage(index));
+        });
+
+        // Сброс transition после загрузки
+        window.addEventListener('load', () => {
+            wrapper.style.transition = 'transform 0.3s ease-out';
+        });
+    </script>
 </body>
 </html>
