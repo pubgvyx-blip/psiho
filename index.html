@@ -2,351 +2,1146 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psihokid | Digital Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Psihokid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-green: #00ff00;
-            --dark-bg: #050505;
-            --card-bg: #0a0a0a;
-            --glow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.2);
+            --bg: #0d0b14;
+            --bg2: #13101e;
+            --card: #16132288;
+            --border: #2e2845;
+            --accent: #c084fc;
+            --accent2: #f59e0b;
+            --accent3: #38bdf8;
+            --text: #e2d9f3;
+            --muted: #7c6fa0;
+            --danger: #f472b6;
+            --glow-purple: rgba(192, 132, 252, 0.25);
+            --glow-amber: rgba(245, 158, 11, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 20px;
+            background-color: var(--bg);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
-            background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+            align-items: flex-start;
+            padding: 16px;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(192,132,252,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(56,189,248,0.05) 0%, transparent 60%);
         }
 
-        /* Эффект старого монитора (сканлинии) */
+        /* Noise overlay */
         body::before {
-            content: " ";
+            content: '';
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: 100;
+            z-index: 0;
+            opacity: 0.4;
         }
 
-        .container {
+        .pages-container {
             width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            max-width: 820px;
+            position: relative;
+            z-index: 1;
+            padding-top: 8px;
         }
 
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
+        .pages-wrapper {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
         }
 
+        .page {
+            flex: 0 0 100%;
+            padding: 8px 4px;
+        }
+
+        /* Card */
         .card {
-            background: var(--card-bg);
-            border: 2px solid var(--neon-green);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--glow);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+            opacity: 0.6;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(192,132,252,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .nav-arrow {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1em;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 12px var(--glow-purple);
+        }
+
+        .nav-arrow:disabled { opacity: 0.2; cursor: default; }
+
+        .page-indicator { display: flex; gap: 10px; align-items: center; }
+
+        .indicator-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator-dot.active {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
             position: relative;
         }
 
-        h1, h2 {
-            color: var(--neon-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-align: center;
+        .brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.2em;
+            letter-spacing: 6px;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--danger) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
         }
 
-        h1 { font-size: 2.5em; text-shadow: 0 0 15px var(--neon-green); }
-
-        .section-box {
-            border: 1px solid var(--neon-green);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
+        /* Глитч */
+        .brand::before, .brand::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--danger) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
+
+        .brand-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .brand-wrap::before {
+            content: attr(data-brand);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.2em;
+            letter-spacing: 6px;
+            line-height: 1;
+            position: absolute;
+            top: 0; left: 0;
+            color: var(--accent3);
+            opacity: 0;
+            animation: glitch1 5s infinite;
+            clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+        }
+
+        .brand-wrap::after {
+            content: attr(data-brand);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.2em;
+            letter-spacing: 6px;
+            line-height: 1;
+            position: absolute;
+            top: 0; left: 0;
+            color: var(--danger);
+            opacity: 0;
+            animation: glitch2 5s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+        }
+
+        @keyframes glitch1 {
+            0%, 90%, 100% { opacity: 0; transform: translateX(0); }
+            92% { opacity: 0.6; transform: translateX(-3px); }
+            94% { opacity: 0; transform: translateX(3px); }
+            96% { opacity: 0.4; transform: translateX(-2px); }
+        }
+
+        @keyframes glitch2 {
+            0%, 90%, 100% { opacity: 0; transform: translateX(0); }
+            93% { opacity: 0.5; transform: translateX(3px); }
+            95% { opacity: 0; transform: translateX(-2px); }
+            97% { opacity: 0.3; transform: translateX(1px); }
+        }
+
+        .page-subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72em;
+            color: var(--muted);
+            letter-spacing: 3px;
+            margin-top: 4px;
+        }
+
+        .page-subtitle span {
+            color: var(--accent2);
+        }
+
+        /* Sections */
+        .section { margin-bottom: 28px; }
 
         .section-title {
-            background: var(--neon-green);
-            color: black;
-            display: inline-block;
-            padding: 2px 10px;
-            font-weight: bold;
-            margin-bottom: 15px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7em;
             text-transform: uppercase;
-        }
-
-        /* Список элементов (как на фото) */
-        .item-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .item-info {
+            letter-spacing: 4px;
+            color: var(--accent);
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .checkbox {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--neon-green);
-            border-radius: 50%;
-            position: relative;
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
         }
 
-        .item-row.selected .checkbox::after {
-            content: "";
-            width: 10px;
-            height: 10px;
-            background: var(--neon-green);
+        /* Price items */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            margin-bottom: 6px;
+            background: rgba(255,255,255,0.02);
+            transition: all 0.2s;
+        }
+
+        .price-row:hover {
+            border-color: var(--border);
+            background: rgba(192,132,252,0.04);
+        }
+
+        .price-row-name {
+            font-size: 0.95em;
+            font-weight: 400;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-row-name .dot {
+            width: 6px; height: 6px;
             border-radius: 50%;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px var(--neon-green);
+            background: var(--accent);
+            flex-shrink: 0;
         }
 
         .price-tag {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid var(--neon-green);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: var(--neon-green);
-            font-weight: bold;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        /* Терминал */
-        .terminal {
-            background: #000;
-            border-radius: 5px;
-            padding: 10px;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Space Mono', monospace;
             font-size: 0.85em;
-            margin-top: 15px;
-            border-top: 15px solid #222;
+            color: var(--accent2);
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
         }
 
-        .terminal-text { color: #00ff00; }
-        .terminal-code { color: #ffffff; }
-
-        /* Итоговая панель */
-        .total-box {
-            margin-top: 20px;
-            border-top: 1px solid var(--neon-green);
-            padding-top: 15px;
+        /* Sub list */
+        .sub-list {
+            margin: 8px 0 14px 16px;
+            padding: 14px 16px;
+            border-left: 2px solid var(--border);
+            background: rgba(255,255,255,0.01);
+            border-radius: 0 10px 10px 0;
         }
 
-        .total-row {
+        .sub-list-item {
+            font-size: 0.88em;
+            color: var(--muted);
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-list-item:last-child { border-bottom: none; }
+
+        .sub-list-item::before {
+            content: '›';
+            color: var(--accent);
             font-size: 1.1em;
         }
 
-        /* Кнопки */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .btn-green {
-            background: var(--neon-green);
-            color: black;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
-        }
-
-        .btn-green:hover { transform: scale(1.02); box-shadow: 0 0 25px var(--neon-green); }
-
-        .btn-reset {
-            background: #222;
+        /* NEW badge */
+        .badge-new {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6em;
+            letter-spacing: 1px;
+            background: var(--danger);
             color: white;
-            border: 1px solid #444;
+            padding: 2px 7px;
+            border-radius: 4px;
+            animation: pulse 2s infinite;
+            vertical-align: middle;
         }
 
-        /* Футер ссылки */
-        .footer-links {
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Terminal block */
+        .terminal-block {
+            background: #0a0812;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin: 12px 0 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75em;
+            overflow-x: auto;
+        }
+
+        .terminal-bar {
             display: flex;
-            justify-content: space-around;
-            margin-top: 25px;
-            font-size: 0.8em;
+            gap: 6px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .footer-links a {
-            color: var(--neon-green);
+        .t-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+
+        .t-dot:nth-child(1) { background: #ff5f57; }
+        .t-dot:nth-child(2) { background: #febc2e; }
+        .t-dot:nth-child(3) { background: #28c840; }
+
+        .t-label {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.85em;
+        }
+
+        .t-line { padding: 2px 0; color: var(--muted); }
+        .t-prompt { color: var(--accent); margin-right: 8px; }
+        .t-hl { color: var(--accent2); }
+        .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s infinite; vertical-align: middle; margin-left: 4px; }
+        @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+
+        /* Footer / Contacts */
+        .footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            color: var(--text);
             text-decoration: none;
+            border: 1px solid var(--border);
+            padding: 10px 22px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            font-size: 0.9em;
+            background: rgba(255,255,255,0.02);
+            transition: all 0.25s;
+        }
+
+        .contact-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px var(--glow-purple);
+            background: rgba(192,132,252,0.05);
+        }
+
+        /* Bot button */
+        .bot-wrap {
+            margin-top: 28px;
+            text-align: center;
+        }
+
+        .bot-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 1px solid rgba(192,132,252,0.4);
+            box-shadow: 0 4px 24px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            animation: botPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes botPulse {
+            0%, 100% { box-shadow: 0 4px 24px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 4px 40px rgba(139,92,246,0.65), inset 0 1px 0 rgba(255,255,255,0.1); }
+        }
+
+        .bot-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(139,92,246,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+
+        .bot-features {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .bot-feat {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65em;
+            color: var(--muted);
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+        }
+
+        .bot-username {
+            margin-top: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75em;
+            color: var(--accent);
+        }
+
+        .bot-username a { color: inherit; text-decoration: none; }
+        .bot-username a:hover { text-shadow: 0 0 10px var(--accent); }
+
+        /* ====== КАЛЬКУЛЯТОР ====== */
+        .discount-hint {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65em;
+            letter-spacing: 2px;
+            color: var(--accent2);
+            background: rgba(245,158,11,0.06);
+            border: 1px solid rgba(245,158,11,0.2);
+            border-radius: 8px;
+            padding: 8px 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .calc-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .calc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(255,255,255,0.02);
+            user-select: none;
+        }
+
+        .calc-item:hover {
+            border-color: rgba(192,132,252,0.4);
+            background: rgba(192,132,252,0.04);
+        }
+
+        .calc-item.selected {
+            border-color: var(--accent);
+            background: rgba(192,132,252,0.1);
+            box-shadow: 0 0 16px rgba(192,132,252,0.15);
+        }
+
+        @keyframes flashItem {
+            0% { opacity: 1; }
+            40% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .calc-item.flash { animation: flashItem 0.2s ease; }
+
+        .calc-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .calc-check {
+            width: 20px; height: 20px;
+            border: 1.5px solid var(--muted);
+            border-radius: 5px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8em;
+            color: transparent;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .calc-item.selected .calc-check {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .calc-name-text {
+            font-size: 0.92em;
+            color: var(--text);
+        }
+
+        .calc-price-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78em;
+            color: var(--accent2);
+            white-space: nowrap;
+        }
+
+        /* Итого */
+        .calc-summary {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: var(--muted);
+            padding: 5px 0;
+        }
+
+        .summary-row.discount { color: var(--accent2); }
+
+        .summary-row.total {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3em;
+            color: var(--text);
+            font-weight: 700;
+            border-top: 1px solid var(--border);
+            margin-top: 10px;
+            padding-top: 14px;
+        }
+
+        .summary-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65em;
+            color: var(--muted);
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        /* Кнопки калькулятора */
+        .calc-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-reset {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-order {
+            flex: 2;
+            padding: 14px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-order:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+        .btn-order.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        /* Order terminal */
+        .order-terminal-wrap { display: none; margin-top: 16px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--bg2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75em;
+            z-index: 999;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 0 20px var(--glow-purple);
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* Bio note */
+        .bio-note {
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6em;
+            color: var(--muted);
+            opacity: 0.5;
+            margin-top: 12px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 20px 16px; }
+            .brand { font-size: 2.4em; }
+            .brand-wrap::before, .brand-wrap::after { font-size: 2.4em; }
+            .calc-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="card">
-        <h1>PSIHOKID #1</h1>
-        
-        <div class="section-box">
-            <div class="section-title">Расследования</div>
-            <div class="item-row" onclick="toggleItem('res1', 8.99)">
-                <div class="item-info"><div class="checkbox" id="res1-check"></div> Информационное досье</div>
-                <div class="price-tag">8.99 USDT</div>
+    <div class="pages-container">
+        <div class="nav-wrapper">
+            <button class="nav-arrow" id="arrowLeft" onclick="goToPage(0)" disabled>◂</button>
+            <div class="page-indicator">
+                <div class="indicator-dot active" onclick="goToPage(0)"></div>
+                <div class="indicator-dot" onclick="goToPage(1)"></div>
             </div>
-            <div class="item-row" onclick="toggleItem('res2', 19.99)">
-                <div class="item-info"><div class="checkbox" id="res2-check"></div> Оперативное досье</div>
-                <div class="price-tag">19.99 USDT</div>
-            </div>
+            <button class="nav-arrow" id="arrowRight" onclick="goToPage(1)">▸</button>
         </div>
 
-        <div class="section-box">
-            <div class="section-title">Обучение</div>
-            <div class="item-row" onclick="toggleItem('edu1', 59.99)">
-                <div class="item-info"><div class="checkbox" id="edu1-check"></div> Полный курс наставничества</div>
-                <div class="price-tag">59.99 USDT</div>
+        <div class="pages-wrapper" id="pagesWrapper">
+
+            <!-- ===== СТРАНИЦА 1: Прайс ===== -->
+            <div class="page">
+                <div class="card">
+                    <div class="page-header">
+                        <div class="brand-wrap" data-brand="PSIHOKID">
+                            <div class="brand">PSIHOKID</div>
+                        </div>
+                        <div class="page-subtitle">INTELLIGENCE <span>//</span> CUSTOM TOOLS <span>//</span> OSINT</div>
+                    </div>
+
+                    <!-- Расследования -->
+                    <div class="section">
+                        <div class="section-title">/ РАССЛЕДОВАНИЯ</div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>Информационное досье</div>
+                            <span class="price-tag">8.99 USDT</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>Оперативное досье</div>
+                            <span class="price-tag">19.99 USDT</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>Разведывательное досье</div>
+                            <span class="price-tag">39.99 USDT</span>
+                        </div>
+                    </div>
+
+                    <!-- Обучение -->
+                    <div class="section">
+                        <div class="section-title">/ ОБУЧЕНИЕ</div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>Полный курс</div>
+                            <span class="price-tag">59.99 USDT</span>
+                        </div>
+                        <div class="sub-list">
+                            <div class="sub-list-item">Персональное наставничество «от А до Я»</div>
+                            <div class="sub-list-item">Индивидуальная программа</div>
+                            <div class="sub-list-item">Анонимность & OPSEC</div>
+                            <div class="sub-list-item">Профессиональные инструменты</div>
+                            <div class="sub-list-item">Аналитика и визуализация</div>
+                            <div class="sub-list-item">Реальные кейсы</div>
+                        </div>
+                    </div>
+
+                    <!-- Софт -->
+                    <div class="section">
+                        <div class="section-title">/ СОФТ ПОД ЗАКАЗ</div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>Кастомные инструменты — от</div>
+                            <span class="price-tag">20.99 USDT</span>
+                        </div>
+                        <div class="terminal-block">
+                            <div class="terminal-bar">
+                                <div class="t-dot"></div>
+                                <div class="t-dot"></div>
+                                <div class="t-dot"></div>
+                                <span class="t-label">PhoneInfoga v1.10.9</span>
+                            </div>
+                            <div class="t-line"><span class="t-prompt">$</span> python3 phoneinfoga.py -m +3361 --any</div>
+                            <div class="t-line">+1 Country found: <span class="t-hl">France (+33)</span></div>
+                            <div class="t-line">+1 Carrier: <span class="t-hl">3FR</span></div>
+                            <div class="t-line">+1 Timezone: <span class="t-hl">Europe/Paris</span></div>
+                            <div class="t-line">[✓] The number is valid and possible.</div>
+                            <div class="t-line"><span class="t-prompt">$</span><span class="t-cursor"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Аккаунты -->
+                    <div class="section">
+                        <div class="section-title">/ АККАУНТЫ ТЕЛЕГРАМ</div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>+7 (РФ)</div>
+                            <span class="price-tag">3.99 USDT</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>+380 (Укр)</div>
+                            <span class="price-tag">4.99 USDT</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>+1 (США/Канада)</div>
+                            <span class="price-tag">7.99 USDT</span>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-row-name"><span class="dot"></span>+420 (Чехия) <span class="badge-new">NEW</span></div>
+                            <span class="price-tag">4.29 USDT</span>
+                        </div>
+                    </div>
+
+                    <!-- Контакты -->
+                    <div class="footer">
+                        <div class="footer-label">связь и сотрудничество</div>
+                        <div class="contacts">
+                            <a href="https://t.me/vyxedith" class="contact-btn" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.53.52-.5-.01-1.47-.28-2.19-.52-.88-.29-1.58-.44-1.52-.94.03-.26.39-.52 1.07-.8 4.16-1.81 6.94-3.01 8.33-3.59 3.97-1.67 4.8-1.96 5.34-1.97.12 0 .38.03.55.18.15.13.19.31.21.44.02.14.02.36-.01.56z"/>
+                                </svg>
+                                Канал
+                            </a>
+                            <a href="https://t.me/vyxeyes" class="contact-btn" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/>
+                                </svg>
+                                @vyxeyes
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bot-wrap">
+                        <a href="https://t.me/psihomarkets_bot?start" class="bot-btn" target="_blank">
+                            🤖 &nbsp;ЗАКАЗАТЬ В БОТЕ
+                        </a>
+                        <div class="bot-features">
+                            <span class="bot-feat">⚡ Мгновенно</span>
+                            <span class="bot-feat">📦 Автовыдача</span>
+                            <span class="bot-feat">✅ 24/7</span>
+                        </div>
+                        <div class="bot-username"><a href="https://t.me/psihomarkets_bot" target="_blank">@psihomarkets_bot</a></div>
+                    </div>
+                </div>
             </div>
+
+            <!-- ===== СТРАНИЦА 2: Калькулятор ===== -->
+            <div class="page">
+                <div class="card">
+                    <div class="page-header">
+                        <div class="brand-wrap" data-brand="CALCULATOR">
+                            <div class="brand" style="font-size: 2.4em; letter-spacing: 4px;">CALCULATOR</div>
+                        </div>
+                        <div class="page-subtitle">ВЫБЕРИ УСЛУГИ <span>//</span> МЫ ПОСЧИТАЕМ</div>
+                    </div>
+
+                    <div class="discount-hint">⚡ −5% при выборе 3 и более услуг</div>
+
+                    <div class="calc-grid" id="calcGrid">
+                        <div class="calc-item" data-id="info" data-price="8.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Информационное досье</span>
+                            </div>
+                            <span class="calc-price-tag">8.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="oper" data-price="19.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Оперативное досье</span>
+                            </div>
+                            <span class="calc-price-tag">19.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="razv" data-price="39.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Разведывательное досье</span>
+                            </div>
+                            <span class="calc-price-tag">39.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="course" data-price="59.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Полный курс обучения</span>
+                            </div>
+                            <span class="calc-price-tag">59.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="soft" data-price="20.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Кастомный софт (база)</span>
+                            </div>
+                            <span class="calc-price-tag">20.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="rf" data-price="3.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Аккаунт +7 (РФ)</span>
+                            </div>
+                            <span class="calc-price-tag">3.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="ua" data-price="4.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Аккаунт +380 (Укр)</span>
+                            </div>
+                            <span class="calc-price-tag">4.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="us" data-price="7.99">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Аккаунт +1 (США/Канада)</span>
+                            </div>
+                            <span class="calc-price-tag">7.99 USDT</span>
+                        </div>
+                        <div class="calc-item" data-id="cz" data-price="4.29">
+                            <div class="calc-item-left">
+                                <div class="calc-check">✓</div>
+                                <span class="calc-name-text">Аккаунт +420 (Чехия) <span class="badge-new">NEW</span></span>
+                            </div>
+                            <span class="calc-price-tag">4.29 USDT</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-summary">
+                        <div class="summary-row">
+                            <span>Сумма</span>
+                            <span id="subtotal">0.00 USDT</span>
+                        </div>
+                        <div class="summary-row discount" id="discountRow" style="display:none;">
+                            <span>Скидка 5%</span>
+                            <span id="discount">—</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>ИТОГО</span>
+                            <span id="total">0.00 USDT</span>
+                        </div>
+                        <div class="summary-count" id="serviceCount">Выбрано: 0 услуг</div>
+                    </div>
+
+                    <div class="calc-actions">
+                        <button class="btn-reset" onclick="resetCalculator()">СБРОС</button>
+                        <a href="https://t.me/vyxeyes" class="btn-order disabled" id="orderBtn" target="_blank">ОФОРМИТЬ →</a>
+                    </div>
+
+                    <div class="order-terminal-wrap" id="orderTerminalWrap">
+                        <div class="terminal-block">
+                            <div class="terminal-bar">
+                                <div class="t-dot"></div>
+                                <div class="t-dot"></div>
+                                <div class="t-dot"></div>
+                                <span class="t-label">order.generated</span>
+                            </div>
+                            <div class="t-line" id="orderSummaryLine">
+                                <span class="t-prompt">></span> waiting...
+                            </div>
+                            <div class="t-line" id="orderTotalLine">
+                                <span class="t-prompt">></span> total: 0.00 USDT
+                            </div>
+                            <div class="t-line"><span class="t-prompt">$</span><span class="t-cursor"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Контакты 2й страницы -->
+                    <div class="footer">
+                        <div class="footer-label">отправь заказ напрямую</div>
+                        <div class="contacts">
+                            <a href="https://t.me/vyxedith" class="contact-btn" target="_blank">Канал</a>
+                            <a href="https://t.me/vyxeyes" class="contact-btn" target="_blank">@vyxeyes</a>
+                        </div>
+                    </div>
+
+                    <div class="bot-wrap">
+                        <a href="https://t.me/psihomarkets_bot?start" class="bot-btn" target="_blank">
+                            🤖 &nbsp;ЗАКАЗАТЬ В БОТЕ
+                        </a>
+                        <div class="bot-features">
+                            <span class="bot-feat">⚡ Мгновенно</span>
+                            <span class="bot-feat">📦 Автовыдача</span>
+                            <span class="bot-feat">✅ 24/7</span>
+                        </div>
+                        <div class="bot-username"><a href="https://t.me/psihomarkets_bot" target="_blank">@psihomarkets_bot</a></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="section-box">
-            <div class="section-title">Софт под заказ</div>
-            <div class="terminal">
-                <div class="terminal-text">Python exploit.py</div>
-                <div class="terminal-code">import asset<br>for i in range(5):<br>&nbsp;&nbsp;print("Access granted...")</div>
-                <div class="terminal-text">output: [OK]</div>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">Аккаунты Telegram</div>
-            <div class="item-row" onclick="toggleItem('acc1', 3.99)">
-                <div class="item-info"><div class="checkbox" id="acc1-check"></div> Россия (+7)</div>
-                <div class="price-tag">3.99 USDT</div>
-            </div>
-            <div class="item-row" onclick="toggleItem('acc2', 4.99)">
-                <div class="item-info"><div class="checkbox" id="acc2-check"></div> Украина (+380)</div>
-                <div class="price-tag">4.99 USDT</div>
-            </div>
-        </div>
-
-        <a href="https://t.me/psihomarkets_bot" class="btn btn-green">🤖 ЗАКАЗАТЬ В БОТЕ</a>
+        <div class="bio-note">⚡ 2 ВКЛАДКИ • СТРЕЛКИ ИЛИ СВАЙП • @psihomarkets_bot ⚡</div>
     </div>
 
-    <div class="card">
-        <h1>КАЛЬКУЛЯТОР</h1>
-        
-        <div class="section-box" id="calc-list">
-            <div style="text-align: center; opacity: 0.5;">Выберите услуги слева...</div>
-        </div>
+    <div class="toast" id="toast"></div>
 
-        <div class="total-box">
-            <div class="total-row"><span>СУММА:</span> <span id="subtotal">0.00 USDT</span></div>
-            <div class="total-row" style="color: #ffaa00;"><span>СКИДКА (5%):</span> <span id="discount">0.00 USDT</span></div>
-            <div class="total-row" style="font-size: 1.5em; color: var(--neon-green);"><span>ИТОГО:</span> <span id="total">0.00 USDT</span></div>
-        </div>
+    <script>
+        const wrapper = document.getElementById('pagesWrapper');
+        const dots = document.querySelectorAll('.indicator-dot');
+        const arrowLeft = document.getElementById('arrowLeft');
+        const arrowRight = document.getElementById('arrowRight');
+        let currentPage = 0;
+        let startX = 0;
+        let isDragging = false;
+        const threshold = 50;
+        let lastTap = 0;
 
-        <button class="btn btn-reset" onclick="resetAll()">СБРОС (RESET)</button>
-        <button class="btn btn-green">ОФОРМИТЬ ЗАКАЗ</button>
+        let selectedItems = {};
+        const items = document.querySelectorAll('.calc-item');
 
-        <div class="terminal">
-            <div class="terminal-text">> Генерация заказа #2026...</div>
-            <div class="terminal-code" id="order-log">Ожидание выбора...</div>
-        </div>
-
-        <div class="footer-links">
-            <a href="#">🌐 TELEGRAM КАНАЛ</a>
-            <a href="#">💬 СВЯЗЬ</a>
-            <a href="#">📂 GITHUB</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    let selectedItems = {};
-
-    function toggleItem(id, price) {
-        const row = event.currentTarget;
-        if (selectedItems[id]) {
-            delete selectedItems[id];
-            row.classList.remove('selected');
-        } else {
-            selectedItems[id] = { price: price, name: row.innerText.split('\n')[0].trim() };
-            row.classList.add('selected');
-        }
-        updateCalc();
-    }
-
-    function updateCalc() {
-        const listContainer = document.getElementById('calc-list');
-        const orderLog = document.getElementById('order-log');
-        listContainer.innerHTML = '';
-        
-        let subtotal = 0;
-        let itemsCount = 0;
-        let names = [];
-
-        for (let id in selectedItems) {
-            subtotal += selectedItems[id].price;
-            itemsCount++;
-            names.push(selectedItems[id].name);
-            
-            const div = document.createElement('div');
-            div.className = 'item-row';
-            div.innerHTML = `<span>${selectedItems[id].name}</span><span class="price-tag">${selectedItems[id].price} USDT</span>`;
-            listContainer.appendChild(div);
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
         }
 
-        if (itemsCount === 0) {
-            listContainer.innerHTML = '<div style="text-align: center; opacity: 0.5;">Выберите услуги слева...</div>';
-            orderLog.innerText = 'Ожидание выбора...';
-        } else {
-            orderLog.innerText = 'Подготовка заказа:\n' + names.join('\n');
+        function updateCalculator() {
+            let subtotal = 0, count = 0, summary = [];
+
+            items.forEach(item => {
+                if (selectedItems[item.dataset.id]) {
+                    subtotal += parseFloat(item.dataset.price);
+                    count++;
+                    summary.push(item.querySelector('.calc-name-text').innerText.trim());
+                }
+            });
+
+            let discount = 0;
+            const discountRow = document.getElementById('discountRow');
+            if (count >= 3) {
+                discount = subtotal * 0.05;
+                discountRow.style.display = 'flex';
+                document.getElementById('discount').innerText = `-${discount.toFixed(2)} USDT`;
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            const total = subtotal - discount;
+            document.getElementById('subtotal').innerText = `${subtotal.toFixed(2)} USDT`;
+            document.getElementById('total').innerText = `${total.toFixed(2)} USDT`;
+            document.getElementById('serviceCount').innerText = `Выбрано: ${count} услуг`;
+
+            const orderBtn = document.getElementById('orderBtn');
+            const wrap = document.getElementById('orderTerminalWrap');
+
+            if (count > 0) {
+                wrap.style.display = 'block';
+                let summaryText = summary.slice(0, 3).join(', ');
+                if (summary.length > 3) summaryText += ` +${summary.length - 3}`;
+                document.getElementById('orderSummaryLine').innerHTML = `<span class="t-prompt">></span> selected: ${summaryText}`;
+                document.getElementById('orderTotalLine').innerHTML = `<span class="t-prompt">></span> total: ${total.toFixed(2)} USDT${discount > 0 ? ' (−5%)' : ''}`;
+                const msg = encodeURIComponent(`Здравствуйте! Хочу заказать:\n${summary.join('\n')}\nИтого: ${total.toFixed(2)} USDT`);
+                orderBtn.href = `https://t.me/vyxeyes?text=${msg}`;
+                orderBtn.classList.remove('disabled');
+            } else {
+                wrap.style.display = 'none';
+                orderBtn.href = 'https://t.me/vyxeyes';
+                orderBtn.classList.add('disabled');
+            }
         }
 
-        let discount = itemsCount >= 3 ? subtotal * 0.05 : 0;
-        let total = subtotal - discount;
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const now = Date.now();
+                if (now - lastTap < 300) return;
+                lastTap = now;
 
-        document.getElementById('subtotal').innerText = subtotal.toFixed(2) + ' USDT';
-        document.getElementById('discount').innerText = '-' + discount.toFixed(2) + ' USDT';
-        document.getElementById('total').innerText = total.toFixed(2) + ' USDT';
-    }
+                const id = item.dataset.id;
+                if (selectedItems[id]) {
+                    delete selectedItems[id];
+                    item.classList.remove('selected');
+                } else {
+                    selectedItems[id] = true;
+                    item.classList.add('selected');
+                }
 
-    function resetAll() {
-        selectedItems = {};
-        document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
-        updateCalc();
-    }
-</script>
+                item.classList.add('flash');
+                item.addEventListener('animationend', () => item.classList.remove('flash'), { once: true });
+                updateCalculator();
+            });
+        });
 
+        window.resetCalculator = function() {
+            selectedItems = {};
+            items.forEach(i => i.classList.remove('selected'));
+            updateCalculator();
+            showToast('✓ Корзина очищена');
+        };
+
+        function updateIndicator(page) {
+            dots.forEach((d, i) => d.classList.toggle('active', i === page));
+            arrowLeft.disabled = page === 0;
+            arrowRight.disabled = page === 1;
+        }
+
+        window.goToPage = function(page) {
+            currentPage = page;
+            wrapper.style.transform = `translateX(-${currentPage * 100}%)`;
+            updateIndicator(currentPage);
+        };
+
+        wrapper.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            wrapper.style.transition = 'none';
+        });
+
+        wrapper.addEventListener('touchmove', e => {
+            if (!isDragging) return;
+            const diff = e.touches[0].clientX - startX;
+            if ((currentPage === 0 && diff > 0) || (currentPage === 1 && diff < 0)) return;
+            wrapper.style.transform = `translateX(calc(-${currentPage * 100}% + ${diff}px))`;
+        });
+
+        wrapper.addEventListener('touchend', e => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = e.changedTouches[0].clientX - startX;
+            wrapper.style.transition = 'transform 0.4s cubic-bezier(0.77,0,0.175,1)';
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && currentPage > 0) goToPage(0);
+                else if (diff < 0 && currentPage < 1) goToPage(1);
+                else goToPage(currentPage);
+            } else {
+                goToPage(currentPage);
+            }
+        });
+
+        window.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft' && currentPage > 0) goToPage(0);
+            else if (e.key === 'ArrowRight' && currentPage < 1) goToPage(1);
+        });
+
+        window.addEventListener('load', () => {
+            updateCalculator();
+            updateIndicator(0);
+        });
+    </script>
 </body>
 </html>
