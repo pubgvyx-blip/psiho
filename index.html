@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Psihokid | Neon Edition</title>
+    <title>Psihokid | Monochrome Edition</title>
     <style>
         * {
             margin: 0;
@@ -12,9 +12,9 @@
         }
         
         body {
-            background-color: #0d0216; /* Глубокий темно-фиолетовый */
+            background-color: #121212; /* Глубокий графитовый фон */
             font-family: 'Courier New', Courier, monospace;
-            color: #bc13fe; /* Основной неоновый фиолетовый */
+            color: #e0e0e0; /* Светло-серый основной текст */
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -29,10 +29,10 @@
             width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #0d0216;
+            background: #121212;
         }
         ::-webkit-scrollbar-thumb {
-            background: #bc13fe;
+            background: #ffffff;
             border-radius: 10px;
         }
 
@@ -45,7 +45,7 @@
         
         .pages-wrapper {
             display: flex;
-            transition: transform 0.3s ease-out;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
         }
         
@@ -56,27 +56,27 @@
         }
 
         .card {
-            background-color: #160625;
-            border: 2px solid #bc13fe;
+            background-color: #1a1a1a; /* Чуть светлее фона для объема */
+            border: 1px solid #333333;
             padding: 30px;
-            box-shadow: 0 0 25px rgba(188, 19, 254, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             position: relative;
             width: 100%;
             overflow: hidden;
         }
 
-        /* Эффект сканирующей линии */
+        /* Тонкая белая сканирующая линия */
         .card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff00ff, transparent);
-            animation: scan 4s linear infinite;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            animation: scan 5s linear infinite;
             z-index: 10;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         @keyframes scan {
@@ -93,18 +93,18 @@
         }
 
         .indicator-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid #bc13fe;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #666;
             background-color: transparent;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .indicator-dot.active {
-            background-color: #bc13fe;
-            box-shadow: 0 0 15px #bc13fe, 0 0 5px #ff00ff;
+            background-color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             transform: scale(1.2);
         }
 
@@ -113,149 +113,151 @@
             font-size: 1.8rem;
             margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            border-bottom: 2px solid #bc13fe;
-            padding-bottom: 10px;
-            text-shadow: 0 0 10px #bc13fe;
+            letter-spacing: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            color: #ffffff;
+            font-weight: normal;
         }
 
         h2 {
-            font-size: 1.2rem;
-            margin: 25px 0 15px;
-            color: #ff00ff; /* Розовый акцент */
-            border-left: 4px solid #ff00ff;
-            padding-left: 10px;
-            text-shadow: 0 0 5px #ff00ff;
+            font-size: 1.1rem;
+            margin: 30px 0 15px;
+            color: #ffffff;
+            border-left: 2px solid #ffffff;
+            padding-left: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .item {
             margin-bottom: 15px;
             padding: 10px;
-            border: 1px dashed rgba(188, 19, 254, 0.4);
-            transition: all 0.3s;
+            border-bottom: 1px solid #222;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
         }
 
         .item:hover {
-            background: rgba(188, 19, 254, 0.05);
-            border-color: #bc13fe;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom-color: #444;
         }
 
         .price {
-            float: right;
-            color: #ff00ff;
+            color: #ffffff;
             font-weight: bold;
-            background: rgba(255, 0, 255, 0.1);
-            padding: 0 8px;
-            border-radius: 4px;
+            padding: 0 5px;
         }
 
-        /* Кнопка бота */
+        /* Строгая белая кнопка */
         .bot-button {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin-top: 30px;
-            background: linear-gradient(45deg, #bc13fe, #ff00ff);
-            color: #ffffff;
+            padding: 18px;
+            margin-top: 35px;
+            background-color: #ffffff;
+            color: #000000;
             text-align: center;
             text-decoration: none;
             font-weight: bold;
             border: none;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(188, 19, 254, 0.5);
             transition: 0.3s;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .bot-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
-            filter: brightness(1.1);
+            background-color: #cccccc;
+            transform: translateY(-2px);
         }
 
         /* Калькулятор */
         .calc-container {
             display: grid;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 25px;
         }
 
         .calc-item {
-            padding: 12px;
-            border: 1px solid #bc13fe;
+            padding: 15px;
+            border: 1px solid #333;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s;
+            background: #1e1e1e;
         }
 
         .calc-item:hover {
-            background-color: rgba(188, 19, 254, 0.1);
+            border-color: #666;
         }
 
         .calc-item.selected {
-            background-color: #bc13fe;
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 15px #bc13fe;
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         .total-box {
-            border-top: 2px solid #bc13fe;
-            padding-top: 20px;
-            margin-top: 20px;
-            font-size: 1.3rem;
+            border-top: 1px solid #333;
+            padding-top: 25px;
+            margin-top: 25px;
+            font-size: 1.4rem;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
         }
 
         .discount-info {
-            font-size: 0.9rem;
-            color: #ff00ff;
+            font-size: 0.85rem;
+            color: #888;
             margin-bottom: 10px;
             height: 20px;
+            font-style: italic;
         }
 
         .calc-btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: transparent;
-            color: #bc13fe;
-            border: 2px solid #bc13fe;
+            color: #ffffff;
+            border: 1px solid #ffffff;
             cursor: pointer;
             font-family: inherit;
             font-weight: bold;
             text-transform: uppercase;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         .calc-btn:hover:not(:disabled) {
-            background-color: #bc13fe;
+            background-color: #ffffff;
             color: #000;
-            box-shadow: 0 0 20px #bc13fe;
         }
 
         .calc-btn:disabled {
-            opacity: 0.3;
+            opacity: 0.2;
             cursor: not-allowed;
         }
 
-        /* Терминал для Soft block */
+        /* Терминал в сером стиле */
         .terminal-box {
             background: #000;
-            padding: 10px;
-            border: 1px solid #bc13fe;
-            font-size: 0.8rem;
+            padding: 15px;
+            border: 1px solid #222;
+            font-size: 0.85rem;
             margin-top: 10px;
-            color: #bc13fe;
-            opacity: 0.8;
+            color: #888;
         }
 
         .cursor {
             display: inline-block;
             width: 8px;
             height: 15px;
-            background: #ff00ff;
-            animation: blink 0.8s infinite;
+            background: #ffffff;
+            animation: blink 1s infinite;
             vertical-align: middle;
         }
 
@@ -265,9 +267,10 @@
         }
 
         @media (max-width: 600px) {
-            .card { padding: 20px; }
-            h1 { font-size: 1.4rem; }
-            .price { float: none; display: block; margin-top: 5px; }
+            .card { padding: 25px 15px; }
+            h1 { font-size: 1.2rem; letter-spacing: 4px; }
+            .item { flex-direction: column; }
+            .price { margin-top: 5px; }
         }
     </style>
 </head>
@@ -282,40 +285,40 @@
     <div class="pages-wrapper" id="pagesWrapper">
         <div class="page">
             <div class="card">
-                <h1>PSIHOKID_PROJECT</h1>
+                <h1>PSIHOKID</h1>
                 
-                <p style="text-align:center; margin-bottom: 20px;">[ СТАТУС: ONLINE ]</p>
+                <p style="text-align:center; margin-bottom: 25px; color: #666; font-size: 0.8rem;">[ SYSTEM STATUS: ENCRYPTED ]</p>
 
-                <h2>> РАССЛЕДОВАНИЯ</h2>
-                <div class="item">Поверхностное досье <span class="price">40 USDT</span></div>
-                <div class="item">Оперативное досье <span class="price">80 USDT</span></div>
-                <div class="item">Разведывательное досье <span class="price">150 USDT</span></div>
+                <h2>Services</h2>
+                <div class="item"><span>Surface Dossier</span> <span class="price">40 USDT</span></div>
+                <div class="item"><span>Operational Dossier</span> <span class="price">80 USDT</span></div>
+                <div class="item"><span>Full Intelligence</span> <span class="price">150 USDT</span></div>
 
-                <h2>> ОБУЧЕНИЕ</h2>
-                <div class="item">Анонимность и безопасность <span class="price">200 USDT</span></div>
-                <div class="item">Наставничество (месяц) <span class="price">500 USDT</span></div>
+                <h2>Training</h2>
+                <div class="item"><span>Security Course</span> <span class="price">200 USDT</span></div>
+                <div class="item"><span>Mentorship (Monthly)</span> <span class="price">500 USDT</span></div>
 
-                <h2>> СОФТ ПОД ЗАКАЗ</h2>
+                <h2>Custom Soft</h2>
                 <div class="terminal-box">
-                    root@psihokid:~# python3 phone_infoga.py -n +7999...<br>
-                    [+] Target: Russia | Operator: MTS<br>
-                    [+] Gathering social media data...<br>
+                    $ run phone_lookup --target +7999...<br>
+                    > analyzing data packets...<br>
+                    > social link found: [REDACTED]<br>
                     <span class="cursor"></span>
                 </div>
-                <p style="margin-top:10px; font-size: 0.9rem;">* Цена договорная (от 100 USDT)</p>
+                <p style="margin-top:12px; font-size: 0.8rem; color: #555;">* Pricing starts from 100 USDT</p>
 
-                <h2>> TELEGRAM ACCOUNTS</h2>
-                <div class="item">Аккаунты РФ (Tdata) <span class="price">3 USDT/шт</span></div>
-                <div class="item">Аккаунты USA/Canada <span class="price">5 USDT/шт</span></div>
+                <h2>Telegram</h2>
+                <div class="item"><span>RU Accounts (Tdata)</span> <span class="price">3 USDT/pc</span></div>
+                <div class="item"><span>Global Accounts</span> <span class="price">5 USDT/pc</span></div>
 
-                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank">Перейти в магазин бота</a>
+                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank">Store Bot</a>
             </div>
         </div>
 
         <div class="page">
             <div class="card">
-                <h1>ORDER_CALC</h1>
-                <p style="margin-bottom: 20px;">Выберите услуги для расчета стоимости:</p>
+                <h1>CHECKOUT</h1>
+                <p style="margin-bottom: 20px; color: #888;">Select requirements:</p>
 
                 <div class="calc-container" id="calcList">
                     </div>
@@ -323,12 +326,13 @@
                 <div class="discount-info" id="discountMessage"></div>
 
                 <div class="total-box">
-                    ИТОГО: <span id="totalPrice" style="color: #ff00ff;">0</span> USDT
+                    <span>TOTAL:</span>
+                    <span id="totalPrice">0</span> USDT
                 </div>
 
-                <button class="calc-btn" id="orderBtn" disabled onclick="sendOrder()">Оформить заказ (@vyxeyes)</button>
+                <button class="calc-btn" id="orderBtn" disabled onclick="sendOrder()">Confirm Order</button>
                 
-                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank">Бот автопродаж</a>
+                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank" style="background: transparent; color: #666; border: 1px solid #333;">Secondary Market</a>
             </div>
         </div>
     </div>
@@ -336,12 +340,12 @@
 
 <script>
     const services = [
-        { id: 'surf', name: 'Поверхностное досье', price: 40 },
-        { id: 'oper', name: 'Оперативное досье', price: 80 },
-        { id: 'intel', name: 'Разведывательное досье', price: 150 },
-        { id: 'anon', name: 'Курс анонимности', price: 200 },
-        { id: 'ment', name: 'Наставничество', price: 500 },
-        { id: 'tg_rf', name: 'Аккаунты РФ (пак 5шт)', price: 15 }
+        { id: 'surf', name: 'Surface Dossier', price: 40 },
+        { id: 'oper', name: 'Operational Dossier', price: 80 },
+        { id: 'intel', name: 'Full Intelligence', price: 150 },
+        { id: 'anon', name: 'Security Course', price: 200 },
+        { id: 'ment', name: 'Mentorship', price: 500 },
+        { id: 'tg_rf', name: 'Telegram Accounts (5x)', price: 15 }
     ];
 
     let selectedServices = new Set();
@@ -349,7 +353,6 @@
     const dots = document.querySelectorAll('.indicator-dot');
     let currentPage = 0;
 
-    // Инициализация калькулятора
     function initCalc() {
         const list = document.getElementById('calcList');
         services.forEach(s => {
@@ -384,7 +387,7 @@
         const discMsg = document.getElementById('discountMessage');
         if (count >= 3) {
             total = Math.floor(total * 0.95);
-            discMsg.innerText = "✓ Применена скидка 5% за опт";
+            discMsg.innerText = "5% bulk discount applied";
         } else {
             discMsg.innerText = "";
         }
@@ -394,16 +397,15 @@
     }
 
     function sendOrder() {
-        let text = "Здравствуйте! Хочу заказать услуги:%0A";
+        let text = "New Order:%0A";
         selectedServices.forEach(id => {
             const service = services.find(s => s.id === id);
             text += `- ${service.name}%0A`;
         });
-        text += `%0AИтоговая сумма: ${document.getElementById('totalPrice').innerText} USDT`;
+        text += `%0ATotal: ${document.getElementById('totalPrice').innerText} USDT`;
         window.open(`https://t.me/vyxeyes?text=${text}`, '_blank');
     }
 
-    // Навигация
     function goToPage(index) {
         currentPage = index;
         wrapper.style.transform = `translateX(-${index * 100}%)`;
@@ -412,7 +414,7 @@
         });
     }
 
-    // Обработка свайпов
+    // Свайпы
     let startX = 0;
     let isDragging = false;
 
@@ -426,20 +428,15 @@
         if (!isDragging) return;
         const currentX = e.touches[0].clientX;
         const diff = currentX - startX;
-        
-        // Ограничение свайпа по краям
         if ((currentPage === 0 && diff > 0) || (currentPage === 1 && diff < 0)) return;
-        
         wrapper.style.transform = `translateX(calc(-${currentPage * 100}% + ${diff}px))`;
     });
 
     wrapper.addEventListener('touchend', (e) => {
         if (!isDragging) return;
         isDragging = false;
-        wrapper.style.transition = 'transform 0.3s ease-out';
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - startX;
-
+        wrapper.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        const diff = e.changedTouches[0].clientX - startX;
         if (Math.abs(diff) > 50) {
             if (diff > 0 && currentPage > 0) goToPage(0);
             else if (diff < 0 && currentPage < 1) goToPage(1);
