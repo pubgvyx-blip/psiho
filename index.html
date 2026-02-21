@@ -2,359 +2,351 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Psihokid | Red Neon Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psihokid | Digital Services</title>
     <style>
+        :root {
+            --neon-green: #00ff00;
+            --dark-bg: #050505;
+            --card-bg: #0a0a0a;
+            --glow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            /* Твоя тянка на фоне */
-            background: 
-                linear-gradient(rgba(10, 2, 2, 0.85), rgba(15, 5, 5, 0.85)),
-                url('data:image/jpeg;base64,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');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            
-            font-family: 'Courier New', Courier, monospace;
-            color: #ff4d4d; /* Приятный неоновый красный */
-            line-height: 1.6;
-            min-height: 100vh;
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 10px;
-            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* Полоса прокрутки */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #1a0505; }
-        ::-webkit-scrollbar-thumb { background: #ff0000; }
+        /* Эффект старого монитора (сканлинии) */
+        body::before {
+            content: " ";
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
 
-        .pages-container {
+        .container {
             width: 100%;
-            max-width: 900px;
-            position: relative;
-            touch-action: pan-y pinch-zoom;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
-        
-        .pages-wrapper {
-            display: flex;
-            transition: transform 0.3s ease-out;
-            will-change: transform;
-        }
-        
-        .page {
-            flex: 0 0 100%;
-            padding: 0 10px;
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
         }
 
         .card {
-            background-color: rgba(30, 5, 5, 0.75); /* Эффект матового стекла */
-            backdrop-filter: blur(10px);
-            border: 2px solid #ff0000;
-            padding: 40px;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+            background: var(--card-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--glow);
             position: relative;
-            width: 100%;
         }
 
-        /* Сканирующая линия */
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff0000, transparent);
-            animation: scan 3s linear infinite;
+        h1, h2 {
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
+        h1 { font-size: 2.5em; text-shadow: 0 0 15px var(--neon-green); }
 
-        /* Навигация */
-        .page-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        .section-box {
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 15px;
             margin-bottom: 20px;
         }
 
-        .indicator-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid #ff4d4d;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .indicator-dot.active {
-            background-color: #ff0000;
-            box-shadow: 0 0 15px #ff0000;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            border-bottom: 2px solid #ff0000;
-            padding-bottom: 10px;
-            color: #fff;
-            text-shadow: 0 0 10px #ff0000;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            margin: 25px 0 15px;
-            border-left: 4px solid #ff0000;
-            padding-left: 15px;
-            color: #ff4d4d;
-        }
-
-        .item {
-            margin-bottom: 12px;
-            padding: 5px;
-            border-bottom: 1px dashed rgba(255, 77, 77, 0.3);
-        }
-
-        .price {
-            float: right;
-            color: #fff;
-            background: rgba(255, 0, 0, 0.3);
-            padding: 0 8px;
-            border-radius: 4px;
-            text-shadow: 0 0 5px #ff0000;
-        }
-
-        /* Кнопки */
-        .bot-button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 30px;
-            background: linear-gradient(45deg, #800000, #ff0000);
-            color: white;
-            text-align: center;
-            text-decoration: none;
+        .section-title {
+            background: var(--neon-green);
+            color: black;
+            display: inline-block;
+            padding: 2px 10px;
             font-weight: bold;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            transition: 0.3s;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
-        .bot-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.7);
+        /* Список элементов (как на фото) */
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .item-row.selected .checkbox::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .price-tag {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid var(--neon-green);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--neon-green);
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
         }
 
         /* Терминал */
-        .terminal-box {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            border: 1px solid #ff0000;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            color: #ff4d4d;
+        .terminal {
+            background: #000;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            margin-top: 15px;
+            border-top: 15px solid #222;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background: #ff0000;
-            animation: blink 1s infinite;
-            vertical-align: middle;
+        .terminal-text { color: #00ff00; }
+        .terminal-code { color: #ffffff; }
+
+        /* Итоговая панель */
+        .total-box {
+            margin-top: 20px;
+            border-top: 1px solid var(--neon-green);
+            padding-top: 15px;
         }
 
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* Калькулятор */
-        .calc-item {
-            padding: 15px;
-            border: 1px solid #ff4d4d;
-            margin-bottom: 10px;
-            cursor: pointer;
+        .total-row {
             display: flex;
             justify-content: space-between;
-            transition: 0.2s;
+            margin-bottom: 5px;
+            font-size: 1.1em;
         }
 
-        .calc-item.selected {
-            background-color: #ff0000;
-            color: white;
-            box-shadow: 0 0 15px #ff0000;
-        }
-
-        .total-box {
-            font-size: 1.6rem;
-            margin-top: 25px;
-            border-top: 2px solid #ff0000;
-            padding-top: 15px;
-            text-align: right;
-            color: #fff;
-        }
-
-        .calc-btn {
+        /* Кнопки */
+        .btn {
+            display: block;
             width: 100%;
-            padding: 18px;
-            background: transparent;
-            border: 2px solid #ff0000;
-            color: #ff0000;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
+            padding: 15px;
             margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
         }
 
-        .calc-btn:hover:not(:disabled) {
-            background: #ff0000;
-            color: #fff;
+        .btn-green {
+            background: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
         }
 
-        @media (max-width: 600px) {
-            .card { padding: 20px; }
-            h1 { font-size: 1.5rem; }
-            .price { float: none; display: block; margin-top: 5px; }
+        .btn-green:hover { transform: scale(1.02); box-shadow: 0 0 25px var(--neon-green); }
+
+        .btn-reset {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+        }
+
+        /* Футер ссылки */
+        .footer-links {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            font-size: 0.8em;
+        }
+
+        .footer-links a {
+            color: var(--neon-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
     </style>
 </head>
 <body>
 
-<div class="pages-container">
-    <div class="page-indicators">
-        <div class="indicator-dot active" onclick="goToPage(0)"></div>
-        <div class="indicator-dot" onclick="goToPage(1)"></div>
-    </div>
-
-    <div class="pages-wrapper" id="pagesWrapper">
-        <div class="page">
-            <div class="card">
-                <h1>PSIHOKID</h1>
-                <p style="text-align:center;">[ SYSTEM STATUS: ENCRYPTED ]</p>
-
-                <h2>РАССЛЕДОВАНИЯ</h2>
-                <div class="item">Поверхностное досье <span class="price">40 USDT</span></div>
-                <div class="item">Оперативное досье <span class="price">80 USDT</span></div>
-                <div class="item">Разведывательное досье <span class="price">150 USDT</span></div>
-
-                <h2>ОБУЧЕНИЕ</h2>
-                <div class="item">Анонимность и безопасность <span class="price">200 USDT</span></div>
-                <div class="item">Наставничество (мес) <span class="price">500 USDT</span></div>
-
-                <h2>СОФТ ПОД ЗАКАЗ</h2>
-                <div class="terminal-box">
-                    root@psihokid:~# ./scan_network.sh<br>
-                    > Injecting payload... [OK]<br>
-                    > Cracking hashes... <span class="cursor"></span>
-                </div>
-
-                <h2>TELEGRAM ACCOUNTS</h2>
-                <div class="item">Аккаунты РФ (Tdata) <span class="price">3 USDT</span></div>
-                <div class="item">USA / Canada <span class="price">5 USDT</span></div>
-
-                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank">ПЕРЕЙТИ В МАГАЗИН</a>
+<div class="container">
+    <div class="card">
+        <h1>PSIHOKID #1</h1>
+        
+        <div class="section-box">
+            <div class="section-title">Расследования</div>
+            <div class="item-row" onclick="toggleItem('res1', 8.99)">
+                <div class="item-info"><div class="checkbox" id="res1-check"></div> Информационное досье</div>
+                <div class="price-tag">8.99 USDT</div>
+            </div>
+            <div class="item-row" onclick="toggleItem('res2', 19.99)">
+                <div class="item-info"><div class="checkbox" id="res2-check"></div> Оперативное досье</div>
+                <div class="price-tag">19.99 USDT</div>
             </div>
         </div>
 
-        <div class="page">
-            <div class="card">
-                <h1>ORDER_CALC</h1>
-                <div id="calcList"></div>
-                <div id="discountMsg" style="color: #fff; margin: 10px 0; height: 20px; font-weight: bold;"></div>
-                <div class="total-box">
-                    ИТОГО: <span id="totalPrice">0</span> USDT
-                </div>
-                <button class="calc-btn" id="orderBtn" disabled onclick="sendOrder()">ОФОРМИТЬ ЧЕРЕЗ МЕНЕДЖЕРА</button>
+        <div class="section-box">
+            <div class="section-title">Обучение</div>
+            <div class="item-row" onclick="toggleItem('edu1', 59.99)">
+                <div class="item-info"><div class="checkbox" id="edu1-check"></div> Полный курс наставничества</div>
+                <div class="price-tag">59.99 USDT</div>
             </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">Софт под заказ</div>
+            <div class="terminal">
+                <div class="terminal-text">Python exploit.py</div>
+                <div class="terminal-code">import asset<br>for i in range(5):<br>&nbsp;&nbsp;print("Access granted...")</div>
+                <div class="terminal-text">output: [OK]</div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">Аккаунты Telegram</div>
+            <div class="item-row" onclick="toggleItem('acc1', 3.99)">
+                <div class="item-info"><div class="checkbox" id="acc1-check"></div> Россия (+7)</div>
+                <div class="price-tag">3.99 USDT</div>
+            </div>
+            <div class="item-row" onclick="toggleItem('acc2', 4.99)">
+                <div class="item-info"><div class="checkbox" id="acc2-check"></div> Украина (+380)</div>
+                <div class="price-tag">4.99 USDT</div>
+            </div>
+        </div>
+
+        <a href="https://t.me/psihomarkets_bot" class="btn btn-green">🤖 ЗАКАЗАТЬ В БОТЕ</a>
+    </div>
+
+    <div class="card">
+        <h1>КАЛЬКУЛЯТОР</h1>
+        
+        <div class="section-box" id="calc-list">
+            <div style="text-align: center; opacity: 0.5;">Выберите услуги слева...</div>
+        </div>
+
+        <div class="total-box">
+            <div class="total-row"><span>СУММА:</span> <span id="subtotal">0.00 USDT</span></div>
+            <div class="total-row" style="color: #ffaa00;"><span>СКИДКА (5%):</span> <span id="discount">0.00 USDT</span></div>
+            <div class="total-row" style="font-size: 1.5em; color: var(--neon-green);"><span>ИТОГО:</span> <span id="total">0.00 USDT</span></div>
+        </div>
+
+        <button class="btn btn-reset" onclick="resetAll()">СБРОС (RESET)</button>
+        <button class="btn btn-green">ОФОРМИТЬ ЗАКАЗ</button>
+
+        <div class="terminal">
+            <div class="terminal-text">> Генерация заказа #2026...</div>
+            <div class="terminal-code" id="order-log">Ожидание выбора...</div>
+        </div>
+
+        <div class="footer-links">
+            <a href="#">🌐 TELEGRAM КАНАЛ</a>
+            <a href="#">💬 СВЯЗЬ</a>
+            <a href="#">📂 GITHUB</a>
         </div>
     </div>
 </div>
 
 <script>
-    const services = [
-        { id: '1', name: 'Поверхностное досье', price: 40 },
-        { id: '2', name: 'Оперативное досье', price: 80 },
-        { id: '3', name: 'Разведывательное досье', price: 150 },
-        { id: '4', name: 'Курс анонимности', price: 200 },
-        { id: '5', name: 'Наставничество', price: 500 }
-    ];
+    let selectedItems = {};
 
-    let selected = new Set();
-    const wrapper = document.getElementById('pagesWrapper');
-    const dots = document.querySelectorAll('.indicator-dot');
-    let current = 0;
-
-    function init() {
-        const list = document.getElementById('calcList');
-        services.forEach(s => {
-            const div = document.createElement('div');
-            div.className = 'calc-item';
-            div.innerHTML = `<span>${s.name}</span> <span>${s.price} USDT</span>`;
-            div.onclick = () => {
-                if(selected.has(s.id)) {
-                    selected.delete(s.id);
-                    div.classList.remove('selected');
-                } else {
-                    selected.add(s.id);
-                    div.classList.add('selected');
-                }
-                update();
-            };
-            list.appendChild(div);
-        });
-    }
-
-    function update() {
-        let total = 0;
-        selected.forEach(id => total += services.find(s => s.id === id).price);
-        
-        const msg = document.getElementById('discountMsg');
-        if (selected.size >= 3) {
-            total = Math.floor(total * 0.95);
-            msg.innerText = "✓ Скидка 5% за объем применена!";
-        } else { msg.innerText = ""; }
-
-        document.getElementById('totalPrice').innerText = total;
-        document.getElementById('orderBtn').disabled = selected.size === 0;
-    }
-
-    function sendOrder() {
-        let text = "Новый заказ:%0A";
-        selected.forEach(id => text += `- ${services.find(s => s.id === id).name}%0A`);
-        text += `%0AВсего: ${document.getElementById('totalPrice').innerText} USDT`;
-        window.open(`https://t.me/vyxeyes?text=${text}`, '_blank');
-    }
-
-    function goToPage(idx) {
-        current = idx;
-        wrapper.style.transform = `translateX(-${idx * 100}%)`;
-        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    }
-
-    // Свайпы
-    let startX = 0;
-    wrapper.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-    wrapper.addEventListener('touchend', e => {
-        let diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 60) {
-            if (diff > 0 && current < 1) goToPage(1);
-            else if (diff < 0 && current > 0) goToPage(0);
+    function toggleItem(id, price) {
+        const row = event.currentTarget;
+        if (selectedItems[id]) {
+            delete selectedItems[id];
+            row.classList.remove('selected');
+        } else {
+            selectedItems[id] = { price: price, name: row.innerText.split('\n')[0].trim() };
+            row.classList.add('selected');
         }
-    });
+        updateCalc();
+    }
 
-    init();
+    function updateCalc() {
+        const listContainer = document.getElementById('calc-list');
+        const orderLog = document.getElementById('order-log');
+        listContainer.innerHTML = '';
+        
+        let subtotal = 0;
+        let itemsCount = 0;
+        let names = [];
+
+        for (let id in selectedItems) {
+            subtotal += selectedItems[id].price;
+            itemsCount++;
+            names.push(selectedItems[id].name);
+            
+            const div = document.createElement('div');
+            div.className = 'item-row';
+            div.innerHTML = `<span>${selectedItems[id].name}</span><span class="price-tag">${selectedItems[id].price} USDT</span>`;
+            listContainer.appendChild(div);
+        }
+
+        if (itemsCount === 0) {
+            listContainer.innerHTML = '<div style="text-align: center; opacity: 0.5;">Выберите услуги слева...</div>';
+            orderLog.innerText = 'Ожидание выбора...';
+        } else {
+            orderLog.innerText = 'Подготовка заказа:\n' + names.join('\n');
+        }
+
+        let discount = itemsCount >= 3 ? subtotal * 0.05 : 0;
+        let total = subtotal - discount;
+
+        document.getElementById('subtotal').innerText = subtotal.toFixed(2) + ' USDT';
+        document.getElementById('discount').innerText = '-' + discount.toFixed(2) + ' USDT';
+        document.getElementById('total').innerText = total.toFixed(2) + ' USDT';
+    }
+
+    function resetAll() {
+        selectedItems = {};
+        document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+        updateCalc();
+    }
 </script>
+
 </body>
 </html>
