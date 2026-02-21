@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Psihokid | Monochrome Edition</title>
+    <title>Psihokid | Red Destiny</title>
     <style>
         * {
             margin: 0;
@@ -12,9 +12,16 @@
         }
         
         body {
-            background-color: #121212; /* Глубокий графитовый фон */
+            /* Фоновое изображение с тяночкой */
+            background: 
+                linear-gradient(rgba(15, 5, 5, 0.8), rgba(15, 5, 5, 0.8)),
+                url('https://w.forfun.com/fetch/f2/f228d4885834f82604084666f36809e6.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            
             font-family: 'Courier New', Courier, monospace;
-            color: #e0e0e0; /* Светло-серый основной текст */
+            color: #ff3333; /* Приятный неоновый красный */
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -24,59 +31,48 @@
             overflow-x: hidden;
         }
         
-        /* Стилизация полосы прокрутки */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #121212;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffffff;
-            border-radius: 10px;
-        }
+        /* Полоса прокрутки */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #1a0505; }
+        ::-webkit-scrollbar-thumb { background: #ff0000; }
 
         .pages-container {
             width: 100%;
             max-width: 900px;
             position: relative;
-            touch-action: pan-y pinch-zoom;
         }
         
         .pages-wrapper {
             display: flex;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
         
         .page {
             flex: 0 0 100%;
             padding: 0 10px;
-            box-sizing: border-box;
         }
 
         .card {
-            background-color: #1a1a1a; /* Чуть светлее фона для объема */
-            border: 1px solid #333333;
+            background-color: rgba(30, 5, 5, 0.7); /* Полупрозрачный темный фон */
+            backdrop-filter: blur(10px); /* Эффект матового стекла */
+            border: 1px solid #ff0000;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
             position: relative;
-            width: 100%;
             overflow: hidden;
         }
 
-        /* Тонкая белая сканирующая линия */
+        /* Красная сканирующая линия */
         .card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #ffffff, transparent);
-            animation: scan 5s linear infinite;
-            z-index: 10;
-            opacity: 0.3;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+            animation: scan 4s linear infinite;
+            opacity: 0.6;
         }
 
         @keyframes scan {
@@ -84,7 +80,6 @@
             100% { top: 100%; }
         }
 
-        /* Индикаторы страниц */
         .page-indicators {
             display: flex;
             justify-content: center;
@@ -93,19 +88,17 @@
         }
 
         .indicator-dot {
-            width: 10px;
-            height: 10px;
-            border: 1px solid #666;
-            background-color: transparent;
+            width: 12px;
+            height: 4px; /* Прямоугольные индикаторы выглядят более технично */
+            background-color: #441111;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .indicator-dot.active {
-            background-color: #ffffff;
-            border-color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            transform: scale(1.2);
+            background-color: #ff0000;
+            box-shadow: 0 0 15px #ff0000;
+            width: 30px;
         }
 
         h1 {
@@ -113,164 +106,120 @@
             font-size: 1.8rem;
             margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-            color: #ffffff;
-            font-weight: normal;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
         }
 
         h2 {
-            font-size: 1.1rem;
-            margin: 30px 0 15px;
-            color: #ffffff;
-            border-left: 2px solid #ffffff;
-            padding-left: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 1.2rem;
+            margin: 25px 0 15px;
+            color: #ff4d4d;
+            border-bottom: 1px solid #441111;
+            display: inline-block;
         }
 
         .item {
             margin-bottom: 15px;
-            padding: 10px;
-            border-bottom: 1px solid #222;
-            transition: all 0.2s;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
-        }
-
-        .item:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom-color: #444;
         }
 
         .price {
             color: #ffffff;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 0 10px;
             font-weight: bold;
-            padding: 0 5px;
         }
 
-        /* Строгая белая кнопка */
+        /* Кнопка */
         .bot-button {
             display: block;
             width: 100%;
-            padding: 18px;
-            margin-top: 35px;
-            background-color: #ffffff;
-            color: #000000;
+            padding: 15px;
+            margin-top: 30px;
+            background: transparent;
+            color: #ff3333;
             text-align: center;
             text-decoration: none;
             font-weight: bold;
-            border: none;
+            border: 2px solid #ff3333;
             transition: 0.3s;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         .bot-button:hover {
-            background-color: #cccccc;
-            transform: translateY(-2px);
+            background: #ff3333;
+            color: #000;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.6);
         }
 
         /* Калькулятор */
-        .calc-container {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
         .calc-item {
-            padding: 15px;
-            border: 1px solid #333;
+            padding: 12px;
+            border: 1px solid #441111;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s;
-            background: #1e1e1e;
-        }
-
-        .calc-item:hover {
-            border-color: #666;
+            margin-bottom: 8px;
+            transition: 0.2s;
         }
 
         .calc-item.selected {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
+            background-color: rgba(255, 0, 0, 0.15);
+            border-color: #ff0000;
+            color: #fff;
         }
 
         .total-box {
-            border-top: 1px solid #333;
-            padding-top: 25px;
-            margin-top: 25px;
-            font-size: 1.4rem;
-            color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .discount-info {
-            font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 10px;
-            height: 20px;
-            font-style: italic;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .calc-btn {
             width: 100%;
-            padding: 18px;
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid #ffffff;
+            padding: 15px;
+            background: #ff0000;
+            color: #fff;
+            border: none;
             cursor: pointer;
-            font-family: inherit;
             font-weight: bold;
             text-transform: uppercase;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        .calc-btn:hover:not(:disabled) {
-            background-color: #ffffff;
-            color: #000;
+            margin-top: 15px;
         }
 
         .calc-btn:disabled {
-            opacity: 0.2;
+            background: #330000;
+            color: #662222;
             cursor: not-allowed;
         }
 
-        /* Терминал в сером стиле */
+        /* Терминал */
         .terminal-box {
-            background: #000;
+            background: rgba(0, 0, 0, 0.8);
             padding: 15px;
-            border: 1px solid #222;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            color: #888;
+            border-left: 3px solid #ff0000;
+            font-size: 0.8rem;
+            color: #ff7777;
         }
 
         .cursor {
             display: inline-block;
             width: 8px;
             height: 15px;
-            background: #ffffff;
-            animation: blink 1s infinite;
-            vertical-align: middle;
+            background: #ff0000;
+            animation: blink 0.8s infinite;
         }
 
-        @keyframes blink { 
-            0%, 100% { opacity: 1; } 
-            50% { opacity: 0; } 
-        }
+        @keyframes blink { 50% { opacity: 0; } }
 
         @media (max-width: 600px) {
-            .card { padding: 25px 15px; }
-            h1 { font-size: 1.2rem; letter-spacing: 4px; }
-            .item { flex-direction: column; }
-            .price { margin-top: 5px; }
+            h1 { font-size: 1.4rem; }
+            .item { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -287,52 +236,42 @@
             <div class="card">
                 <h1>PSIHOKID</h1>
                 
-                <p style="text-align:center; margin-bottom: 25px; color: #666; font-size: 0.8rem;">[ SYSTEM STATUS: ENCRYPTED ]</p>
+                <p style="text-align:center; color: #888; margin-bottom: 20px;">[ ACCESS GRANTED ]</p>
 
-                <h2>Services</h2>
-                <div class="item"><span>Surface Dossier</span> <span class="price">40 USDT</span></div>
-                <div class="item"><span>Operational Dossier</span> <span class="price">80 USDT</span></div>
-                <div class="item"><span>Full Intelligence</span> <span class="price">150 USDT</span></div>
+                <h2>Информационные услуги</h2>
+                <div class="item"><span>Поверхностный поиск</span> <span class="price">40 USDT</span></div>
+                <div class="item"><span>Полный пробив</span> <span class="price">150 USDT</span></div>
 
-                <h2>Training</h2>
-                <div class="item"><span>Security Course</span> <span class="price">200 USDT</span></div>
-                <div class="item"><span>Mentorship (Monthly)</span> <span class="price">500 USDT</span></div>
+                <h2>Обучение</h2>
+                <div class="item"><span>OSINT & Security</span> <span class="price">200 USDT</span></div>
 
-                <h2>Custom Soft</h2>
+                <h2>Разработка</h2>
                 <div class="terminal-box">
-                    $ run phone_lookup --target +7999...<br>
-                    > analyzing data packets...<br>
-                    > social link found: [REDACTED]<br>
+                    > Initializing custom exploit...<br>
+                    > Loading neural modules...<br>
+                    > Status: Ready.<br>
                     <span class="cursor"></span>
                 </div>
-                <p style="margin-top:12px; font-size: 0.8rem; color: #555;">* Pricing starts from 100 USDT</p>
+                <p style="margin-top:10px; font-size: 0.8rem;">* Индивидуальный расчет стоимости</p>
 
-                <h2>Telegram</h2>
-                <div class="item"><span>RU Accounts (Tdata)</span> <span class="price">3 USDT/pc</span></div>
-                <div class="item"><span>Global Accounts</span> <span class="price">5 USDT/pc</span></div>
-
-                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank">Store Bot</a>
+                <a href="https://t.me/psihomarkets_bot" class="bot-button">В магазин бота</a>
             </div>
         </div>
 
         <div class="page">
             <div class="card">
-                <h1>CHECKOUT</h1>
-                <p style="margin-bottom: 20px; color: #888;">Select requirements:</p>
+                <h1>ORDER_SYSTEM</h1>
+                <p style="margin-bottom: 20px; color: #ff7777;">Выберите необходимые модули:</p>
 
-                <div class="calc-container" id="calcList">
-                    </div>
+                <div id="calcList"></div>
 
-                <div class="discount-info" id="discountMessage"></div>
+                <div id="discountMessage" style="color: #fff; font-size: 0.8rem; margin-top: 10px; height: 15px;"></div>
 
                 <div class="total-box">
-                    <span>TOTAL:</span>
-                    <span id="totalPrice">0</span> USDT
+                    ИТОГО: <span id="totalPrice">0</span> USDT
                 </div>
 
-                <button class="calc-btn" id="orderBtn" disabled onclick="sendOrder()">Confirm Order</button>
-                
-                <a href="https://t.me/psihomarkets_bot" class="bot-button" target="_blank" style="background: transparent; color: #666; border: 1px solid #333;">Secondary Market</a>
+                <button class="calc-btn" id="orderBtn" disabled onclick="sendOrder()">Сформировать заказ</button>
             </div>
         </div>
     </div>
@@ -340,113 +279,78 @@
 
 <script>
     const services = [
-        { id: 'surf', name: 'Surface Dossier', price: 40 },
-        { id: 'oper', name: 'Operational Dossier', price: 80 },
-        { id: 'intel', name: 'Full Intelligence', price: 150 },
-        { id: 'anon', name: 'Security Course', price: 200 },
-        { id: 'ment', name: 'Mentorship', price: 500 },
-        { id: 'tg_rf', name: 'Telegram Accounts (5x)', price: 15 }
+        { id: '1', name: 'Поверхностный поиск', price: 40 },
+        { id: '2', name: 'Полный пробив', price: 150 },
+        { id: '3', name: 'OSINT & Security', price: 200 },
+        { id: '4', name: 'Наставничество', price: 500 }
     ];
 
-    let selectedServices = new Set();
+    let selected = new Set();
     const wrapper = document.getElementById('pagesWrapper');
     const dots = document.querySelectorAll('.indicator-dot');
-    let currentPage = 0;
+    let current = 0;
 
-    function initCalc() {
+    function init() {
         const list = document.getElementById('calcList');
         services.forEach(s => {
             const div = document.createElement('div');
             div.className = 'calc-item';
-            div.innerHTML = `<span>${s.name}</span> <span>${s.price} USDT</span>`;
-            div.onclick = () => toggleService(s.id, div);
+            div.innerHTML = `<span>${s.name}</span> <span>${s.price}</span>`;
+            div.onclick = () => {
+                if(selected.has(s.id)) {
+                    selected.delete(s.id);
+                    div.classList.remove('selected');
+                } else {
+                    selected.add(s.id);
+                    div.classList.add('selected');
+                }
+                update();
+            };
             list.appendChild(div);
         });
     }
 
-    function toggleService(id, element) {
-        if (selectedServices.has(id)) {
-            selectedServices.delete(id);
-            element.classList.remove('selected');
-        } else {
-            selectedServices.add(id);
-            element.classList.add('selected');
-        }
-        updateTotal();
-    }
-
-    function updateTotal() {
+    function update() {
         let total = 0;
-        let count = 0;
-        selectedServices.forEach(id => {
-            const service = services.find(s => s.id === id);
-            total += service.price;
-            count++;
-        });
-
-        const discMsg = document.getElementById('discountMessage');
-        if (count >= 3) {
-            total = Math.floor(total * 0.95);
-            discMsg.innerText = "5% bulk discount applied";
-        } else {
-            discMsg.innerText = "";
-        }
+        selected.forEach(id => total += services.find(s => s.id === id).price);
+        
+        const disc = document.getElementById('discountMessage');
+        if (selected.size >= 3) {
+            total = Math.floor(total * 0.9);
+            disc.innerText = "★ Активирована скидка 10% ★";
+        } else { disc.innerText = ""; }
 
         document.getElementById('totalPrice').innerText = total;
-        document.getElementById('orderBtn').disabled = count === 0;
+        document.getElementById('orderBtn').disabled = selected.size === 0;
     }
 
     function sendOrder() {
-        let text = "New Order:%0A";
-        selectedServices.forEach(id => {
-            const service = services.find(s => s.id === id);
-            text += `- ${service.name}%0A`;
-        });
-        text += `%0ATotal: ${document.getElementById('totalPrice').innerText} USDT`;
-        window.open(`https://t.me/vyxeyes?text=${text}`, '_blank');
+        let txt = "Заказ:%0A";
+        selected.forEach(id => txt += `- ${services.find(s => s.id === id).name}%0A`);
+        txt += `%0AВсего: ${document.getElementById('totalPrice').innerText} USDT`;
+        window.open(`https://t.me/vyxeyes?text=${txt}`, '_blank');
     }
 
-    function goToPage(index) {
-        currentPage = index;
-        wrapper.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
+    function goToPage(idx) {
+        current = idx;
+        wrapper.style.transform = `translateX(-${idx * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     }
 
-    // Свайпы
-    let startX = 0;
-    let isDragging = false;
-
-    wrapper.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        wrapper.style.transition = 'none';
-    });
-
-    wrapper.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const currentX = e.touches[0].clientX;
-        const diff = currentX - startX;
-        if ((currentPage === 0 && diff > 0) || (currentPage === 1 && diff < 0)) return;
-        wrapper.style.transform = `translateX(calc(-${currentPage * 100}% + ${diff}px))`;
-    });
-
-    wrapper.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        wrapper.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-        const diff = e.changedTouches[0].clientX - startX;
+    // Упрощенная логика свайпа для мобилок
+    let x = null;
+    wrapper.addEventListener('touchstart', e => x = e.touches[0].clientX);
+    wrapper.addEventListener('touchend', e => {
+        if (!x) return;
+        let diff = x - e.changedTouches[0].clientX;
         if (Math.abs(diff) > 50) {
-            if (diff > 0 && currentPage > 0) goToPage(0);
-            else if (diff < 0 && currentPage < 1) goToPage(1);
-            else goToPage(currentPage);
-        } else {
-            goToPage(currentPage);
+            if (diff > 0 && current < 1) goToPage(1);
+            else if (diff < 0 && current > 0) goToPage(0);
         }
+        x = null;
     });
 
-    initCalc();
+    init();
 </script>
 
 </body>
