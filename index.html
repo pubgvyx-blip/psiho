@@ -192,6 +192,24 @@
         .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);color:var(--accent);border:1px solid var(--accent);padding:9px 20px;border-radius:8px;font-family:'Space Mono',monospace;font-size:.72em;z-index:999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 0 18px var(--glow);backdrop-filter:blur(12px)}
         .toast.show{transform:translateX(-50%) translateY(0)}
         .bio-note{text-align:center;font-family:'Space Mono',monospace;font-size:.58em;color:var(--muted);opacity:.45;margin-top:11px;letter-spacing:2px}
+        /* Accordion */
+        .acc-item{border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden;background:rgba(255,255,255,.02);transition:border-color .2s}
+        .acc-item:hover{border-color:rgba(192,132,252,.3)}
+        .acc-item.open{border-color:rgba(192,132,252,.5);background:rgba(192,132,252,.04)}
+        .acc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;user-select:none;gap:10px}
+        .acc-left{display:flex;align-items:center;gap:9px}
+        .acc-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+        .acc-name{font-size:.92em;color:var(--text)}
+        .acc-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .acc-arrow{color:var(--muted);font-size:.75em;transition:transform .25s;display:inline-block}
+        .acc-item.open .acc-arrow{transform:rotate(180deg);color:var(--accent)}
+        .acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+        .acc-item.open .acc-body{max-height:600px}
+        .acc-inner{padding:0 14px 14px 14px;border-top:1px solid var(--border)}
+        .acc-example{font-size:.78em;color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+        .acc-example:last-child{border-bottom:none;padding-bottom:0}
+        .acc-example::before{content:'›';color:var(--accent);flex-shrink:0;margin-top:1px}
+        .acc-example b{color:var(--text);font-weight:500}
         @media(max-width:600px){
             .card{padding:18px 14px}
             .brand,.brand-wrap::before,.brand-wrap::after{font-size:2.3em}
@@ -220,20 +238,81 @@
                     </div>
                     <div class="section">
                         <div class="section-title">/ РАССЛЕДОВАНИЯ</div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>Информационное досье</div><span class="price-tag">8.99 USDT</span></div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>Оперативное досье</div><span class="price-tag">19.99 USDT</span></div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>Разведывательное досье</div><span class="price-tag">39.99 USDT</span></div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">Информационное досье</span></div>
+                                <div class="acc-right"><span class="price-tag">8.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Соцсети:</b>&nbsp;поиск всех аккаунтов по нику, имени, номеру</div>
+                                <div class="acc-example"><b>Фото:</b>&nbsp;поиск по лицу, геолокация по фото</div>
+                                <div class="acc-example"><b>Контакты:</b>&nbsp;номер телефона, email, мессенджеры</div>
+                                <div class="acc-example"><b>Базовые данные:</b>&nbsp;ФИО, возраст, город проживания</div>
+                                <div class="acc-example"><b>Формат выдачи:</b>&nbsp;PDF-отчёт со скринами и ссылками</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">Оперативное досье</span></div>
+                                <div class="acc-right"><span class="price-tag">19.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Всё из информационного</b>&nbsp;+ углублённый анализ</div>
+                                <div class="acc-example"><b>Связи:</b>&nbsp;родственники, друзья, окружение</div>
+                                <div class="acc-example"><b>Активность:</b>&nbsp;онлайн-следы, история постов, геометки</div>
+                                <div class="acc-example"><b>Утечки:</b>&nbsp;проверка по базам данных</div>
+                                <div class="acc-example"><b>Мессенджеры:</b>&nbsp;Telegram, WhatsApp — поиск по номеру/нику</div>
+                                <div class="acc-example"><b>Формат выдачи:</b>&nbsp;подробный PDF + таблица связей</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">Разведывательное досье</span></div>
+                                <div class="acc-right"><span class="price-tag">39.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Всё из оперативного</b>&nbsp;+ полный цифровой след</div>
+                                <div class="acc-example"><b>Финансы:</b>&nbsp;криптокошельки, публичные транзакции</div>
+                                <div class="acc-example"><b>Бизнес:</b>&nbsp;ИП, ООО, юридические связи</div>
+                                <div class="acc-example"><b>Устройства:</b>&nbsp;IP-адреса, VPN-следы, браузерные отпечатки</div>
+                                <div class="acc-example"><b>Darknet:</b>&nbsp;проверка упоминаний в закрытых источниках</div>
+                                <div class="acc-example"><b>Формат выдачи:</b>&nbsp;полный отчёт + граф связей + таймлайн</div>
+                            </div></div>
+                        </div>
                     </div>
                     <div class="section">
                         <div class="section-title">/ ОБУЧЕНИЕ</div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>Полный курс</div><span class="price-tag">59.99 USDT</span></div>
-                        <div class="sub-list">
-                            <div class="sub-list-item">Персональное наставничество «от А до Я»</div>
-                            <div class="sub-list-item">Индивидуальная программа</div>
-                            <div class="sub-list-item">Анонимность &amp; OPSEC</div>
-                            <div class="sub-list-item">Профессиональные инструменты</div>
-                            <div class="sub-list-item">Аналитика и визуализация</div>
-                            <div class="sub-list-item">Реальные кейсы</div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">Полный курс</span></div>
+                                <div class="acc-right"><span class="price-tag">59.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Формат:</b>&nbsp;персональное наставничество «от А до Я»</div>
+                                <div class="acc-example"><b>Программа:</b>&nbsp;индивидуальная, под твои задачи</div>
+                                <div class="acc-example"><b>Анонимность &amp; OPSEC:</b>&nbsp;как не оставлять следов</div>
+                                <div class="acc-example"><b>Инструменты:</b>&nbsp;профессиональный софт и сервисы</div>
+                                <div class="acc-example"><b>Аналитика:</b>&nbsp;визуализация данных, графы связей</div>
+                                <div class="acc-example"><b>Кейсы:</b>&nbsp;разбор реальных расследований</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">Мануал по OSINT</span></div>
+                                <div class="acc-right"><span class="price-tag">29.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Объём:</b>&nbsp;40+ страниц теории с примерами</div>
+                                <div class="acc-example"><b>Ресурсы:</b>&nbsp;50+ полезных сайтов и сервисов</div>
+                                <div class="acc-example"><b>Модули:</b>&nbsp;поиск по нику, email, телефону, фото, геолокации</div>
+                                <div class="acc-example"><b>Практика:</b>&nbsp;5 заданий с проверкой</div>
+                                <div class="acc-example"><b>Бонус:</b>&nbsp;PDF-шпаргалка + доступ в закрытый чат</div>
+                            </div></div>
                         </div>
                     </div>
                     <div class="section">
@@ -251,10 +330,54 @@
                     </div>
                     <div class="section">
                         <div class="section-title">/ АККАУНТЫ ТЕЛЕГРАМ</div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>+7 (РФ)</div><span class="price-tag">3.99 USDT</span></div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>+380 (Укр)</div><span class="price-tag">4.99 USDT</span></div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>+1 (США/Канада)</div><span class="price-tag">7.99 USDT</span></div>
-                        <div class="price-row"><div class="price-row-name"><span class="dot"></span>+420 (Чехия) <span class="badge-new">NEW</span></div><span class="price-tag">4.29 USDT</span></div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">+7 (РФ)</span></div>
+                                <div class="acc-right"><span class="price-tag">3.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Регистрация:</b>&nbsp;свежий аккаунт на российском номере</div>
+                                <div class="acc-example"><b>Доступ:</b>&nbsp;сессия или номер + код входа</div>
+                                <div class="acc-example"><b>Применение:</b>&nbsp;рассылки, парсинг, анонимные каналы</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">+380 (Укр)</span></div>
+                                <div class="acc-right"><span class="price-tag">4.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Регистрация:</b>&nbsp;аккаунт на украинском номере</div>
+                                <div class="acc-example"><b>Доступ:</b>&nbsp;сессия или номер + код входа</div>
+                                <div class="acc-example"><b>Применение:</b>&nbsp;обход региональных ограничений</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">+1 (США/Канада)</span></div>
+                                <div class="acc-right"><span class="price-tag">7.99 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Регистрация:</b>&nbsp;аккаунт на американском/канадском номере</div>
+                                <div class="acc-example"><b>Доступ:</b>&nbsp;сессия или номер + код входа</div>
+                                <div class="acc-example"><b>Применение:</b>&nbsp;западные сервисы, верификация, анонимность</div>
+                            </div></div>
+                        </div>
+
+                        <div class="acc-item" onclick="toggleAcc(this)">
+                            <div class="acc-header">
+                                <div class="acc-left"><span class="acc-dot"></span><span class="acc-name">+420 (Чехия) <span class="badge-new">NEW</span></span></div>
+                                <div class="acc-right"><span class="price-tag">4.29 USDT</span><span class="acc-arrow">▼</span></div>
+                            </div>
+                            <div class="acc-body"><div class="acc-inner">
+                                <div class="acc-example"><b>Регистрация:</b>&nbsp;аккаунт на чешском номере</div>
+                                <div class="acc-example"><b>Доступ:</b>&nbsp;сессия или номер + код входа</div>
+                                <div class="acc-example"><b>Применение:</b>&nbsp;европейские сервисы, ЕС верификация</div>
+                            </div></div>
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="footer-label">связь и сотрудничество</div>
@@ -340,6 +463,11 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        function toggleAcc(el){
+            const isOpen = el.classList.contains('open');
+            el.classList.toggle('open', !isOpen);
+        }
+
         const wrapper=document.getElementById('pagesWrapper'),
               dots=document.querySelectorAll('.indicator-dot'),
               arrowLeft=document.getElementById('arrowLeft'),
