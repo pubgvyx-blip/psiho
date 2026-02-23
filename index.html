@@ -215,6 +215,50 @@
             .brand,.brand-wrap::before,.brand-wrap::after{font-size:2.3em}
             .calc-actions{flex-direction:column}
         }
+        /* Tools page */
+        .tools-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+        .tool-card{border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:rgba(255,255,255,.02);transition:all .2s;position:relative;overflow:hidden}
+        .tool-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:0;transition:opacity .2s}
+        .tool-card:hover{border-color:rgba(192,132,252,.4);background:rgba(192,132,252,.04)}
+        .tool-card:hover::before{opacity:1}
+        .tool-card-top{display:flex;align-items:center;gap:10px}
+        .tool-icon{font-size:1.2em;flex-shrink:0}
+        .tool-name{font-size:.92em;color:var(--text);font-weight:500}
+        .tool-desc{font-size:.78em;color:var(--muted);margin-top:5px;line-height:1.5;padding-left:30px}
+        /* Preview button */
+        .preview-toggle{width:100%;padding:11px 16px;background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.25);border-radius:8px;color:var(--accent);font-family:'Space Mono',monospace;font-size:.75em;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .22s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
+        .preview-toggle:hover{background:rgba(192,132,252,.14);border-color:var(--accent)}
+        .preview-toggle .arr{transition:transform .25s;display:inline-block}
+        .preview-toggle.open .arr{transform:rotate(180deg)}
+        .preview-box{max-height:0;overflow:hidden;transition:max-height .4s ease}
+        .preview-box.open{max-height:700px}
+        .preview-inner{padding:12px 0 4px}
+        .preview-screen{width:100%;border-radius:10px;border:1px solid var(--border);display:block;background:#000}
+        .preview-caption{font-size:.72em;color:var(--muted);text-align:center;margin-top:7px;font-family:'Space Mono',monospace;letter-spacing:1px}
+        /* Key cards */
+        .keys-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+        @media(max-width:400px){.keys-grid{grid-template-columns:1fr}}
+        .key-card{border:1px solid var(--border);border-radius:12px;padding:14px;background:rgba(255,255,255,.02);text-align:center;cursor:pointer;transition:all .22s;position:relative}
+        .key-card:hover{border-color:var(--accent);background:rgba(192,132,252,.06);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,132,252,.15)}
+        .key-card.popular{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.04)}
+        .key-card.popular:hover{border-color:var(--accent2);box-shadow:0 6px 20px rgba(245,158,11,.2)}
+        .key-card.forever{border-color:rgba(192,132,252,.5);background:rgba(192,132,252,.06);grid-column:1/-1}
+        .key-card.forever:hover{border-color:var(--accent);box-shadow:0 8px 28px rgba(192,132,252,.25)}
+        .key-popular-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--accent2);color:#000;font-family:'Space Mono',monospace;font-size:.55em;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-weight:700}
+        .key-forever-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-family:'Space Mono',monospace;font-size:.55em;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-weight:700}
+        .key-days{font-family:'Bebas Neue',sans-serif;font-size:2.2em;letter-spacing:2px;color:var(--accent);line-height:1}
+        .key-days-forever{font-family:'Bebas Neue',sans-serif;font-size:1.8em;letter-spacing:2px;color:var(--accent);line-height:1}
+        .key-label{font-family:'Space Mono',monospace;font-size:.6em;color:var(--muted);letter-spacing:2px;margin-top:2px}
+        .key-price{font-family:'Space Mono',monospace;font-size:.95em;color:var(--accent2);margin-top:8px;font-weight:700}
+        .key-price-rub{font-size:.65em;color:var(--muted);margin-top:2px}
+        .btn-buy-key{display:block;width:100%;padding:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-family:'Space Mono',monospace;font-size:.82em;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:8px;text-decoration:none;text-align:center;cursor:pointer;transition:all .22s;margin-top:6px}
+        .btn-buy-key:hover{filter:brightness(1.15);transform:translateY(-1px)}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .tool-card{animation:fadeInUp .4s ease both}
+        .tool-card:nth-child(1){animation-delay:.05s}.tool-card:nth-child(2){animation-delay:.1s}
+        .tool-card:nth-child(3){animation-delay:.15s}.tool-card:nth-child(4){animation-delay:.2s}
+        .tool-card:nth-child(5){animation-delay:.25s}.tool-card:nth-child(6){animation-delay:.3s}
+        .tool-card:nth-child(7){animation-delay:.35s}.tool-card:nth-child(8){animation-delay:.4s}
     </style>
 </head>
 <body>
@@ -224,6 +268,7 @@
             <div class="page-indicator">
                 <div class="indicator-dot active" onclick="goToPage(0)"></div>
                 <div class="indicator-dot" onclick="goToPage(1)"></div>
+                <div class="indicator-dot" onclick="goToPage(2)"></div>
             </div>
             <button class="nav-arrow" id="arrowRight" onclick="goToPage(1)">▸</button>
         </div>
@@ -456,9 +501,132 @@
                     </div>
                 </div>
             </div>
+
+            <!-- СТРАНИЦА 3 — PSIHO-TOOLS -->
+            <div class="page">
+                <div class="card">
+                    <div class="page-header">
+                        <div class="brand-wrap" data-brand="PSIHO-TOOLS"><div class="brand" style="font-size:2em;letter-spacing:3px">PSIHO-TOOLS</div></div>
+                        <div class="page-subtitle">OSINT UTILITY <span>//</span> WINDOWS <span>//</span> BY KEY</div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">/ ЧТО УМЕЕТ</div>
+
+                        <!-- КНОПКА ПРЕВЬЮ -->
+                        <button class="preview-toggle" id="previewBtn" onclick="togglePreview()">
+                            <span>👁 показать как выглядит тулка</span>
+                            <span class="arr">▼</span>
+                        </button>
+                        <div class="preview-box" id="previewBox">
+                            <div class="preview-inner">
+                                <!-- SVG-имитация скрина тулки -->
+                                <svg class="preview-screen" viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="500" height="420" fill="#0d0d0d"/>
+                                    <!-- Пиксельный заголовок PSIHO -->
+                                    <text x="50" y="55" font-family="monospace" font-size="38" font-weight="bold" fill="#ff2dce" letter-spacing="4">PSIHO</text>
+                                    <text x="50" y="100" font-family="monospace" font-size="38" font-weight="bold" fill="#ff2dce" letter-spacing="4">TOOLS</text>
+                                    <!-- Линия -->
+                                    <line x1="30" y1="115" x2="470" y2="115" stroke="#333" stroke-width="1"/>
+                                    <!-- Версия -->
+                                    <text x="30" y="135" font-family="monospace" font-size="11" fill="#666">v4.0.0  •  @Ownerps1ho</text>
+                                    <!-- Лицензия -->
+                                    <text x="30" y="158" font-family="monospace" font-size="11" fill="#555">лицензия: </text>
+                                    <text x="110" y="158" font-family="monospace" font-size="11" fill="#c084fc">активна до 2026-03-28 (32 дн.)</text>
+                                    <!-- Меню -->
+                                    <text x="30" y="185" font-family="monospace" font-size="12" font-weight="bold" fill="#eee">ГЛАВНОЕ МЕНЮ</text>
+                                    <line x1="30" y1="192" x2="470" y2="192" stroke="#222" stroke-width="1"/>
+                                    <!-- Пункты меню -->
+                                    <text x="30" y="214" font-family="monospace" font-size="11" fill="#ff2dce">[1]</text><text x="60" y="214" font-family="monospace" font-size="11" fill="#ccc">🔍  Поиск по нику / username</text>
+                                    <text x="30" y="234" font-family="monospace" font-size="11" fill="#ff2dce">[2]</text><text x="60" y="234" font-family="monospace" font-size="11" fill="#ccc">📞  Поиск по номеру телефона</text>
+                                    <text x="30" y="254" font-family="monospace" font-size="11" fill="#ff2dce">[3]</text><text x="60" y="254" font-family="monospace" font-size="11" fill="#ccc">📧  Поиск по email</text>
+                                    <text x="30" y="274" font-family="monospace" font-size="11" fill="#ff2dce">[4]</text><text x="60" y="274" font-family="monospace" font-size="11" fill="#ccc">🌐  Поиск по IP / домену</text>
+                                    <text x="30" y="294" font-family="monospace" font-size="11" fill="#ff2dce">[5]</text><text x="60" y="294" font-family="monospace" font-size="11" fill="#ccc">🖼️   Обратный поиск по фото</text>
+                                    <text x="30" y="314" font-family="monospace" font-size="11" fill="#ff2dce">[6]</text><text x="60" y="314" font-family="monospace" font-size="11" fill="#ccc">✈️   Анализ Telegram аккаунта</text>
+                                    <text x="30" y="334" font-family="monospace" font-size="11" fill="#ff2dce">[7]</text><text x="60" y="334" font-family="monospace" font-size="11" fill="#ccc">🎭  Генератор фейковых данных</text>
+                                    <text x="30" y="354" font-family="monospace" font-size="11" fill="#ff2dce">[8]</text><text x="60" y="354" font-family="monospace" font-size="11" fill="#ccc">📋  История поиска</text>
+                                    <text x="30" y="374" font-family="monospace" font-size="11" fill="#ff2dce">[9]</text><text x="60" y="374" font-family="monospace" font-size="11" fill="#ccc">🎨  Сменить тему</text>
+                                    <text x="30" y="394" font-family="monospace" font-size="11" fill="#ff2dce">[0]</text><text x="60" y="394" font-family="monospace" font-size="11" fill="#ccc">✕   Выход</text>
+                                    <!-- Курсор ввода -->
+                                    <line x1="30" y1="408" x2="470" y2="408" stroke="#222" stroke-width="1"/>
+                                    <text x="30" y="418" font-family="monospace" font-size="11" fill="#ff2dce">▸ </text><text x="48" y="418" font-family="monospace" font-size="11" fill="#666">Выбор: _</text>
+                                </svg>
+                                <div class="preview-caption">// интерфейс утилиты — Windows Terminal</div>
+                            </div>
+                        </div>
+
+                        <div class="tools-grid">
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">🔍</span><span class="tool-name">Поиск по нику</span></div><div class="tool-desc">50 платформ одновременно — Telegram, GitHub, VK, Instagram, TikTok и другие</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">📞</span><span class="tool-name">Поиск по номеру</span></div><div class="tool-desc">Страна, оператор (РФ/UA/BY), ссылки в мессенджеры</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">📧</span><span class="tool-name">Поиск по email</span></div><div class="tool-desc">Провайдер, Gravatar, GitHub, активность домена, проверка утечек</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">🌐</span><span class="tool-name">Поиск по IP / домену</span></div><div class="tool-desc">Город, провайдер, координаты, проверка на VPN/прокси, Google Maps</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">✈️</span><span class="tool-name">Анализ Telegram</span></div><div class="tool-desc">Имя, bio, аватарка, тип аккаунта, подписчики</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">🖼️</span><span class="tool-name">Обратный поиск фото</span></div><div class="tool-desc">Google Lens, Яндекс, TinEye, Bing — всё в один клик</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">🎭</span><span class="tool-name">Генератор фейковых данных</span></div><div class="tool-desc">Полная легенда — ФИО, паспорт, ИНН, СНИЛС, телефон, email, адрес</div></div>
+                            <div class="tool-card"><div class="tool-card-top"><span class="tool-icon">📄</span><span class="tool-name">Экспорт в PDF / TXT</span></div><div class="tool-desc">Любой результат сохраняется в красивый отчёт одной кнопкой</div></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">/ КУПИТЬ КЛЮЧ</div>
+                        <div class="keys-grid">
+                            <div class="key-card" onclick="buyKey(7,'299')">
+                                <div class="key-days">7</div>
+                                <div class="key-label">ДНЕЙ</div>
+                                <div class="key-price">299 ₽</div>
+                                <div class="key-price-rub">~3.3 USDT</div>
+                            </div>
+                            <div class="key-card popular" onclick="buyKey(30,'699')">
+                                <div class="key-popular-badge">🔥 ПОПУЛЯРНО</div>
+                                <div class="key-days">30</div>
+                                <div class="key-label">ДНЕЙ</div>
+                                <div class="key-price">699 ₽</div>
+                                <div class="key-price-rub">~7.8 USDT</div>
+                            </div>
+                            <div class="key-card" onclick="buyKey(90,'1499')">
+                                <div class="key-days">90</div>
+                                <div class="key-label">ДНЕЙ</div>
+                                <div class="key-price">1 499 ₽</div>
+                                <div class="key-price-rub">~16.7 USDT</div>
+                            </div>
+                            <div class="key-card" onclick="buyKey(365,'2799')">
+                                <div class="key-days">365</div>
+                                <div class="key-label">ДНЕЙ</div>
+                                <div class="key-price">2 799 ₽</div>
+                                <div class="key-price-rub">~31.1 USDT</div>
+                            </div>
+                            <div class="key-card forever" onclick="buyKey(0,'3000')">
+                                <div class="key-forever-badge">♾ НАВСЕГДА</div>
+                                <div class="key-days-forever">∞ НАВСЕГДА</div>
+                                <div class="key-label">БЕЗ СРОКА ДЕЙСТВИЯ</div>
+                                <div class="key-price">3 000 ₽</div>
+                                <div class="key-price-rub">~33.3 USDT</div>
+                            </div>
+                        </div>
+                        <a href="https://t.me/Ownerps1ho" class="btn-buy-key" target="_blank" id="buyKeyBtn">💳 &nbsp;КУПИТЬ КЛЮЧ → @Ownerps1ho</a>
+                    </div>
+
+                    <div class="footer">
+                        <div class="footer-label">вопросы и поддержка</div>
+                        <div class="contacts">
+                            <a href="https://t.me/Ownerps1ho" class="contact-btn" target="_blank">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/></svg>
+                                @Ownerps1ho
+                            </a>
+                            <a href="https://t.me/manager_jeka" class="contact-btn" target="_blank">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 2c-1.66 0-5 1.34-5 4v2h10v-2c0-2.66-3.34-4-5-4z"/></svg>
+                                @manager_jeka
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="bio-note">⚡ 2 ВКЛАДКИ • СТРЕЛКИ ИЛИ СВАЙП • @psihomarkets_bot ⚡</div>
+        <div class="bio-note">⚡ 3 ВКЛАДКИ • СТРЕЛКИ ИЛИ СВАЙП • @psihomarkets_bot ⚡</div>
     </div>
+
+    <!-- СТРАНИЦА 3 встроена через pages-wrapper ниже в JS -->
 
     <div class="toast" id="toast"></div>
 
@@ -468,12 +636,19 @@
             el.classList.toggle('open', !isOpen);
         }
 
+        function togglePreview(){
+            const btn=document.getElementById('previewBtn');
+            const box=document.getElementById('previewBox');
+            btn.classList.toggle('open');
+            box.classList.toggle('open');
+        }
+
         const wrapper=document.getElementById('pagesWrapper'),
               dots=document.querySelectorAll('.indicator-dot'),
               arrowLeft=document.getElementById('arrowLeft'),
               arrowRight=document.getElementById('arrowRight');
         let currentPage=0,startX=0,isDragging=false,lastTap=0;
-        const THRESHOLD=50;
+        const TOTAL_PAGES=3, THRESHOLD=50;
         let sel={};
         const items=document.querySelectorAll('.calc-item');
 
@@ -486,10 +661,7 @@
         function updateCalc(){
             let sub=0,count=0,summ=[];
             items.forEach(it=>{
-                if(sel[it.dataset.id]){
-                    sub+=parseFloat(it.dataset.price);count++;
-                    summ.push(it.querySelector('.calc-name-text').innerText.trim());
-                }
+                if(sel[it.dataset.id]){sub+=parseFloat(it.dataset.price);count++;summ.push(it.querySelector('.calc-name-text').innerText.trim());}
             });
             let disc=0;
             const dr=document.getElementById('discountRow');
@@ -502,7 +674,7 @@
             const ob=document.getElementById('orderBtn'),ow=document.getElementById('orderTerminalWrap');
             if(count>0){
                 ow.style.display='block';
-                let st=summ.slice(0,3).join(', ')+(summ.length>3?' +'+( summ.length-3):'');
+                let st=summ.slice(0,3).join(', ')+(summ.length>3?' +'+(summ.length-3):'');
                 document.getElementById('orderSummaryLine').innerHTML='<span class="t-prompt">></span> selected: '+st;
                 document.getElementById('orderTotalLine').innerHTML='<span class="t-prompt">></span> total: '+total.toFixed(2)+' USDT'+(disc>0?' (−5%)':'');
                 ob.href='https://t.me/manager_jeka?text='+encodeURIComponent('Здравствуйте! Хочу заказать:\n'+summ.join('\n')+'\nИтого: '+total.toFixed(2)+' USDT');
@@ -522,7 +694,11 @@
 
         window.resetCalculator=function(){sel={};items.forEach(i=>i.classList.remove('selected'));updateCalc();showToast('✓ Корзина очищена');};
 
-        function updNav(p){dots.forEach((d,i)=>d.classList.toggle('active',i===p));arrowLeft.disabled=p===0;arrowRight.disabled=p===1;}
+        function updNav(p){
+            dots.forEach((d,i)=>d.classList.toggle('active',i===p));
+            arrowLeft.disabled=p===0;
+            arrowRight.disabled=p===TOTAL_PAGES-1;
+        }
 
         window.goToPage=function(p){
             currentPage=p;
@@ -530,21 +706,34 @@
             updNav(p);
         };
 
+        window.buyKey=function(days,price){
+            const label = days===0 ? 'навсегда (∞)' : `на ${days} дней`;
+            const text=`Хочу купить ключ Psiho-Tools ${label} (${price} ₽)`;
+            document.getElementById('buyKeyBtn').href='https://t.me/Ownerps1ho?text='+encodeURIComponent(text);
+            showToast(`✓ Выбрано ${days===0?'Навсегда':days+' дней'} — ${price} ₽`);
+        };
+
         wrapper.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;isDragging=true;wrapper.style.transition='none';});
         wrapper.addEventListener('touchmove',e=>{
             if(!isDragging)return;
             const d=e.touches[0].clientX-startX;
-            if((currentPage===0&&d>0)||(currentPage===1&&d<0))return;
+            if((currentPage===0&&d>0)||(currentPage===TOTAL_PAGES-1&&d<0))return;
             wrapper.style.transform='translateX(calc(-'+currentPage*100+'% + '+d+'px))';
         });
         wrapper.addEventListener('touchend',e=>{
             if(!isDragging)return;isDragging=false;
             const d=e.changedTouches[0].clientX-startX;
             wrapper.style.transition='transform .4s cubic-bezier(.77,0,.175,1)';
-            if(Math.abs(d)>THRESHOLD){if(d>0&&currentPage>0)goToPage(0);else if(d<0&&currentPage<1)goToPage(1);else goToPage(currentPage);}
-            else goToPage(currentPage);
+            if(Math.abs(d)>THRESHOLD){
+                if(d>0&&currentPage>0)goToPage(currentPage-1);
+                else if(d<0&&currentPage<TOTAL_PAGES-1)goToPage(currentPage+1);
+                else goToPage(currentPage);
+            }else goToPage(currentPage);
         });
-        window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&currentPage>0)goToPage(0);else if(e.key==='ArrowRight'&&currentPage<1)goToPage(1);});
+        window.addEventListener('keydown',e=>{
+            if(e.key==='ArrowLeft'&&currentPage>0)goToPage(currentPage-1);
+            else if(e.key==='ArrowRight'&&currentPage<TOTAL_PAGES-1)goToPage(currentPage+1);
+        });
         window.addEventListener('load',()=>{updateCalc();updNav(0);});
     </script>
 </body>
